@@ -1,0 +1,183 @@
+.auth-page {
+  height: 100dvh;
+  display: grid;
+  place-items: start center;
+  padding: var(--spacing-24);
+  padding-bottom: calc(var(--spacing-24) + var(--safe-area-inset-bottom, 0px));
+  background: var(--color-background-base);
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-background-raised);
+  border: 1px solid var(--color-stroke-weak);
+  border-radius: var(--corner-radius-16);
+  padding: var(--spacing-32);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.auth-title {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+.auth-signin-toast {
+  width: 100%;
+}
+
+.auth-success-message {
+  margin: 0;
+  color: var(--color-text-success);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.auth-subtitle {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+
+.auth-form .button.button-primary {
+  width: 100%;
+  min-height: 56px;
+}
+
+.auth-button-row {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--spacing-16);
+}
+
+.auth-verify-actions {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+}
+
+.auth-verify-actions .button.button-primary {
+  width: 100%;
+}
+
+.auth-password-requirements {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.auth-password-requirement {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  color: var(--color-text-weak);
+}
+
+.auth-password-requirement.is-met {
+  color: var(--color-text-success);
+}
+
+.auth-password-requirement.is-error {
+  color: var(--color-text-error);
+}
+
+.auth-spinning-icon {
+  animation: auth-spin 1s linear infinite;
+}
+
+
+@keyframes auth-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.auth-field-meta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.auth-footer-copy {
+  margin: 0;
+  color: var(--color-text-weak);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-8);
+}
+
+.auth-error {
+  color: var(--color-text-danger, #b42318);
+  margin: 0;
+}
+
+.auth-message {
+  color: var(--color-text-success, #027a48);
+  margin: 0;
+}
+
+.auth-verify-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.auth-verify-title {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+.auth-verify-subtitle {
+  margin: 0;
+  color: var(--color-text-weak);
+  overflow-wrap: anywhere;
+}
+
+
+.auth-verify-info {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+.auth-verify-form {
+  width: 100%;
+  align-items: flex-start;
+}
+
+.auth-verify-back {
+  align-self: flex-start;
+  margin-left: calc(-1 * var(--spacing-12));
+}
+
+.auth-page-status {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-weak);
+}

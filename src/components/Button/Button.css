@@ -1,0 +1,326 @@
+/* Button - Figma Design System with all interaction states
+ *
+ * Token mapping from Figma:
+ *   Fill/Brand strong  → --color-fill-brand-strong   (#9C4722)
+ *   Fill/Brand weak    → --color-fill-brand-weak     (#9C47220D)
+ *   Fill/Hover         → --color-fill-hover          (#8026000D) — transparent overlay on top of base fill
+ *   Fill/Press         → --color-fill-press          (#661F0026) — transparent overlay on top of base fill
+ *   Stroke/Brand weak  → --color-stroke-brand-weak   (#9C472233)
+ *   Stroke/Brand strong→ --color-stroke-brand-strong (#9C4722CC)
+ *   Stroke/Focus       → --color-stroke-focus        (#9C4722)
+ *   Text/Inverted      → --color-text-inverted       (#FFFFFF)
+ *   Text/Brand         → --color-text-brand          (#9C4722)
+ *   Text/Error         → --color-text-error          (#C62222)
+ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-8) var(--spacing-12);
+  border-radius: var(--corner-radius-8);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.button[disabled],
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* ─── Icon-only ──────────────────────────────────────────────────────────────
+   Square, fixed-size button that shows a single icon with no label.
+   Use with aria-label on the element for accessibility.
+   Pair with any variant: secondary for neutral framed, tertiary-delete for destructive.
+*/
+.button--icon-only {
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  padding: 0;
+  color: var(--color-icon-neutral);
+}
+
+.button--icon-only.button-secondary {
+  border-color: var(--color-stroke-weak);
+}
+
+.button--icon-only.button-tertiary {
+  color: var(--color-icon-brand);
+}
+
+.button--icon-only.button-tertiary-delete {
+  color: var(--color-icon-error);
+}
+
+.button--icon-only[aria-pressed="true"] {
+  background: var(--color-fill-brand-weak);
+  border-color: var(--color-stroke-selected);
+  color: var(--color-icon-brand);
+}
+
+.button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Primary ────────────────────────────────────────────────────────────────
+   Default  : Fill/Brand strong (solid brand)
+   Hover    : Brand/Light/800   (brand at 80% opacity)
+   Pressed  : Fill/Brand strong + inner shadow
+   Focus    : Fill/Brand strong + Stroke/Focus ring
+*/
+.button-primary {
+  background: var(--color-fill-brand-strong);
+  color: var(--color-text-inverted);
+  border: none;
+}
+
+.button-primary:hover:not([disabled]):not(:disabled) {
+  background: linear-gradient(var(--color-fill-hover), var(--color-fill-hover)),
+              var(--color-fill-brand-strong);
+}
+
+.button-primary[data-active],
+.button-primary:active:not([disabled]):not(:disabled) {
+  background: linear-gradient(var(--color-fill-press), var(--color-fill-press)),
+              var(--color-fill-brand-strong);
+}
+
+.button-primary:focus-visible,
+.button-primary[data-focus-visible] {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+/* ─── Primary Delete ─────────────────────────────────────────────────────────
+  Default  : Fill/Error strong
+  Hover    : Fill/Hover + Fill/Error strong
+  Pressed  : Fill/Press + Fill/Error strong
+  Focus    : Fill/Error strong + Stroke/Error strong ring
+*/
+.button-primary-delete {
+  background: var(--color-fill-error-strong);
+  color: var(--color-text-inverted);
+  border: none;
+}
+
+.button-primary-delete:hover:not([disabled]):not(:disabled) {
+  background: linear-gradient(var(--color-fill-hover), var(--color-fill-hover)),
+              var(--color-fill-error-strong);
+}
+
+.button-primary-delete[data-active],
+.button-primary-delete:active:not([disabled]):not(:disabled) {
+  background: linear-gradient(var(--color-fill-press), var(--color-fill-press)),
+              var(--color-fill-error-strong);
+}
+
+.button-primary-delete:focus-visible,
+.button-primary-delete[data-focus-visible] {
+  outline: 2px solid var(--color-stroke-error-strong);
+  outline-offset: 2px;
+}
+
+/* ─── Secondary ──────────────────────────────────────────────────────────────
+   Default  : Transparent + Stroke/Brand strong
+   Hover    : Fill/Hover + no stroke
+   Pressed  : Transparent + Stroke/Brand strong
+   Focus    : Transparent + Stroke/Focus
+*/
+.button-secondary {
+  background: transparent;
+  color: var(--color-text-brand);
+  border: 1px solid var(--color-stroke-brand-strong);
+}
+
+.button-secondary:hover:not([disabled]):not(:disabled) {
+  background: var(--color-fill-hover);
+  border-color: var(--color-stroke-brand-strong);
+}
+
+.button-secondary[data-active],
+.button-secondary:active:not([disabled]):not(:disabled) {
+  background: transparent;
+  border-color: var(--color-stroke-brand-strong);
+}
+
+.button-secondary:focus-visible,
+.button-secondary[data-focus-visible] {
+  background: transparent;
+  border-color: var(--color-stroke-focus);
+  outline: none;
+}
+
+/* ─── Tertiary ───────────────────────────────────────────────────────────────
+   Default  : Transparent
+   Hover    : Fill/Hover
+   Pressed  : Fill/Press
+   Focus    : Fill/Hover + Stroke/Focus ring
+*/
+.button-tertiary {
+  background: transparent;
+  color: var(--color-text-brand);
+  border: none;
+}
+
+.button-tertiary .button-text {
+  text-decoration: underline;
+}
+
+.button-tertiary:hover:not([disabled]):not(:disabled) {
+  background: var(--color-fill-hover);
+}
+
+.button-tertiary:hover:not([disabled]):not(:disabled) .button-text,
+.button-tertiary[data-active] .button-text,
+.button-tertiary:active:not([disabled]):not(:disabled) .button-text,
+.button-tertiary:focus-visible .button-text,
+.button-tertiary[data-focus-visible] .button-text {
+  text-decoration: none;
+}
+
+.button-tertiary[data-active],
+.button-tertiary:active:not([disabled]):not(:disabled) {
+  background: var(--color-fill-press);
+}
+
+.button-tertiary:focus-visible,
+.button-tertiary[data-focus-visible] {
+  background: var(--color-fill-hover);
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+/* ─── Tertiary Delete ────────────────────────────────────────────────────────
+   Default  : Transparent, error text
+   Hover    : Fill/Hover
+   Pressed  : Fill/Press
+   Focus    : Fill/Hover + Stroke/Error strong ring
+*/
+.button-tertiary-delete {
+  background: transparent;
+  color: var(--color-text-error);
+  border: none;
+}
+
+.button-tertiary-delete .button-text {
+  text-decoration: underline;
+}
+
+.button-tertiary-delete:hover:not([disabled]):not(:disabled) {
+  background: var(--color-fill-hover);
+}
+
+.button-tertiary-delete:hover:not([disabled]):not(:disabled) .button-text,
+.button-tertiary-delete[data-active] .button-text,
+.button-tertiary-delete:active:not([disabled]):not(:disabled) .button-text,
+.button-tertiary-delete:focus-visible .button-text,
+.button-tertiary-delete[data-focus-visible] .button-text {
+  text-decoration: none;
+}
+
+.button-tertiary-delete[data-active],
+.button-tertiary-delete:active:not([disabled]):not(:disabled) {
+  background: var(--color-fill-press);
+}
+
+.button-tertiary-delete:focus-visible,
+.button-tertiary-delete[data-focus-visible] {
+  background: var(--color-fill-hover);
+  outline: 2px solid var(--color-stroke-error-strong);
+  outline-offset: 2px;
+}
+
+/* ─── Ghost ──────────────────────────────────────────────────────────────────
+   Identical to Tertiary but without the underline decoration.
+   Use for inline cancel/dismiss actions where underline would look out of place
+   (e.g. "Cancel" next to a search bar or URL input).
+   Default  : Transparent, Text/Brand, no border, no underline
+   Hover    : Fill/Hover
+   Pressed  : Fill/Press
+   Focus    : Fill/Hover + Stroke/Focus ring
+*/
+.button-ghost {
+  background: transparent;
+  color: var(--color-text-brand);
+  border: none;
+}
+
+.button-ghost:hover:not([disabled]):not(:disabled) {
+  background: var(--color-fill-hover);
+}
+
+.button-ghost[data-active],
+.button-ghost:active:not([disabled]):not(:disabled) {
+  background: var(--color-fill-press);
+}
+
+.button-ghost:focus-visible,
+.button-ghost[data-focus-visible] {
+  background: var(--color-fill-hover);
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+.button-ghost[disabled],
+.button-ghost:disabled {
+  background: transparent;
+  color: var(--color-stroke-weak);
+}
+
+/* ─── Full Width ─────────────────────────────────────────────────────────────
+   Makes button fill its parent container width.
+*/
+.button--full-width {
+  width: 100%;
+}
+
+/* ─── Disabled (Figma) ────────────────────────────────────────────────────────
+   Primary / Secondary / Tertiary       : Stroke/Weak for fill, stroke, text, icon
+   Tertiary Delete                       : Stroke/Error weak for fill, stroke, text, icon
+*/
+.button-primary[disabled],
+.button-primary:disabled {
+  background: var(--color-stroke-weak);
+  border: 1px solid var(--color-stroke-weak);
+  color: var(--color-stroke-weak);
+}
+
+.button-primary-delete[disabled],
+.button-primary-delete:disabled {
+  background: var(--color-stroke-error-weak);
+  border: 1px solid var(--color-stroke-error-weak);
+  color: var(--color-text-inverted);
+}
+
+.button-secondary[disabled],
+.button-secondary:disabled {
+  background: transparent;
+  border-color: var(--color-stroke-weak);
+  color: var(--color-stroke-weak);
+}
+
+.button-tertiary[disabled],
+.button-tertiary:disabled {
+  background: var(--color-stroke-weak);
+  border: 1px solid var(--color-stroke-weak);
+  color: var(--color-stroke-weak);
+}
+
+.button-tertiary-delete[disabled],
+.button-tertiary-delete:disabled {
+  background: var(--color-stroke-error-weak);
+  border: 1px solid var(--color-stroke-error-weak);
+  color: var(--color-stroke-error-weak);
+}
+
+.button-tertiary[disabled] .button-text,
+.button-tertiary:disabled .button-text,
+.button-tertiary-delete[disabled] .button-text,
+.button-tertiary-delete:disabled .button-text {
+  text-decoration: none;
+}

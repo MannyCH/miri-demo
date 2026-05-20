@@ -1,0 +1,156 @@
+/* TEST: deliberate drift to trigger linters */
+.account-page-test-drift {
+  color: #ff0000;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.account-page {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 390px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--color-background-base);
+  padding-top: var(--safe-area-inset-top);
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
+/* ─── View container (clipping region for slide animation) ─── */
+
+.account-page-views {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.account-page-view {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Main view ─── */
+
+.account-page-content {
+  box-sizing: border-box;
+  padding: var(--spacing-24) var(--spacing-16) var(--spacing-16);
+}
+
+.account-page-header {
+  margin: 0 0 var(--spacing-16) 0;
+  color: var(--color-text-strong);
+}
+
+.account-page-settings-title {
+  margin: 0;
+  padding: var(--spacing-32) 0 var(--spacing-8);
+  color: var(--color-text-strong);
+}
+
+/* ─── Navigation bar ─── */
+
+.account-page-navigation {
+  width: 100%;
+}
+
+/* ─── Sub-view shared layout ─── */
+
+.account-subview {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+.account-subview-header {
+  padding: var(--spacing-16) var(--spacing-16) var(--spacing-8);
+  display: flex;
+  align-items: center;
+}
+
+
+.account-subview-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  padding: 0 var(--spacing-16) var(--spacing-24);
+  flex: 1;
+}
+
+.account-subview-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-8);
+  margin-top: var(--spacing-8);
+}
+
+.account-subview-actions-equal .button {
+  flex: 1;
+}
+
+.account-subview-warning {
+  margin: 0;
+  color: var(--color-text-weak);
+}
+
+.account-subview-info {
+  margin: 0;
+  color: var(--color-text-success);
+}
+
+.account-subview-note {
+  margin: 0;
+  color: var(--color-text-weak);
+}
+
+.account-subview-error {
+  margin: 0;
+  color: var(--color-text-error);
+}
+
+/* ─── Password requirements list ─── */
+
+.account-password-requirements {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.account-password-requirement {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  color: var(--color-text-weak);
+}
+
+.account-password-requirement.is-met {
+  color: var(--color-text-success);
+}
+
+.account-password-requirement.is-error {
+  color: var(--color-text-error);
+}
+
+.account-unit-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.account-unit-legend {
+  color: var(--color-text-weak);
+  margin-bottom: var(--spacing-12);
+}
+
+.account-unit-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}

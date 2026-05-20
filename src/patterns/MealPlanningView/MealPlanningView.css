@@ -1,0 +1,96 @@
+/* MealPlanningView Pattern - Pure Flexbox Layout with Safe Areas */
+.meal-planning-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--color-background-base);
+  max-width: 390px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding-top: var(--safe-area-inset-top);
+}
+
+/* Header area (title + calendar module) - Fixed at top, don't shrink */
+.meal-planning-fixed-header {
+  flex-shrink: 0;
+  background: var(--color-background-base);
+}
+
+/* Scrollable content area - Takes remaining space */
+.meal-planning-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Section Header: "Meal Planning" + three-dot icon */
+.meal-planning-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-24) var(--spacing-16) var(--spacing-16);
+}
+
+.meal-planning-section-header h1 {
+  margin: 0;
+}
+
+/* Context menu is now provided by the reusable ContextMenu component */
+
+/* Calendar section wrapping the CalendarModule */
+.meal-planning-calendar-section {
+  padding: 0 var(--spacing-16);
+  margin-bottom: var(--spacing-16);
+}
+
+/* Meal section header */
+.meal-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-8) 0;
+}
+
+.meal-section-header h3 {
+  margin: 0;
+}
+
+.meal-actions {
+  display: flex;
+  gap: var(--spacing-8);
+}
+
+
+/* Primary action button area - only shown when plan exists */
+.meal-planning-action {
+  flex-shrink: 0;
+  padding: var(--spacing-16);
+}
+
+.meal-planning-action .button {
+  width: 100%;
+}
+
+/* Empty state - centered text + button */
+.meal-planning-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-16);
+  padding: var(--spacing-48) var(--spacing-16);
+  text-align: center;
+}
+
+.meal-planning-empty p {
+  margin: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
