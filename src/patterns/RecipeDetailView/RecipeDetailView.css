@@ -229,6 +229,8 @@
 
   .recipe-detail-right {
     flex: 1;
+    max-width: 65ch;
+    margin: 0 auto;
   }
 
   /* Actions: auto-width, sits below directions */
