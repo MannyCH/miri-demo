@@ -23,6 +23,42 @@
   gap: var(--spacing-16);
 }
 
+/* ============================================
+   DESKTOP LAYOUT (768px+)
+   ============================================ */
+
+@media (min-width: 768px) {
+  .recipe-detail-view {
+    max-width: 100%;
+  }
+
+  /* Stack: hero block (image + title + servings) above the 2-col body */
+  .recipe-detail-content {
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    grid-template-areas:
+      "title       title"
+      "image       image"
+      "servings    servings"
+      "ingredients directions"
+      "actions     actions";
+    column-gap: var(--spacing-48);
+    padding: var(--spacing-32) var(--spacing-48);
+    gap: var(--spacing-24);
+  }
+
+  .recipe-detail-title        { grid-area: title; }
+  .recipe-detail-image        { grid-area: image; }
+  .recipe-detail-section.recipe-ingredients-section { grid-area: ingredients; }
+  .recipe-detail-section:not(.recipe-ingredients-section):not(.recipe-servings-section) { grid-area: directions; }
+  .recipe-detail-section.recipe-servings-section { grid-area: servings; }
+  .recipe-detail-actions      { grid-area: actions; }
+
+  .recipe-detail-image img {
+    height: 360px;
+  }
+}
+
 /* Recipe Title */
 .recipe-detail-title {
   margin: 0;

@@ -13,6 +13,12 @@
   padding-bottom: var(--safe-area-inset-bottom);
 }
 
+@media (min-width: 768px) {
+  .recipe-import-view {
+    max-width: 100%;
+  }
+}
+
 /* ── Header ──────────────────────────────────────────────────────────── */
 
 .recipe-import-header {

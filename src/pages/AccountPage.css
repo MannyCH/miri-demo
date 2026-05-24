@@ -17,6 +17,12 @@
   padding-bottom: var(--safe-area-inset-bottom);
 }
 
+@media (min-width: 768px) {
+  .account-page {
+    max-width: 100%;
+  }
+}
+
 /* ─── View container (clipping region for slide animation) ─── */
 
 .account-page-views {

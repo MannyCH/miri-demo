@@ -170,7 +170,7 @@ export const RecipeDetailView = ({
         </div>
 
         {/* Servings Section */}
-        <div className="recipe-detail-section">
+        <div className="recipe-detail-section recipe-servings-section">
           <h2 className="text-tiny-bold recipe-detail-section-title">SERVINGS</h2>
           <Stepper value={servings} min={1} max={99} onChange={setServings} />
         </div>

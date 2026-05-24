@@ -13,6 +13,7 @@
 .recipes-url-sheet {
   width: 100%;
   max-width: 390px;
+  /* On desktop the sheet stays capped at 390px — it's a bottom modal, not a full-width bar */
   background: var(--color-background-raised);
   border-radius: var(--corner-radius-24) var(--corner-radius-24) 0 0;
   padding: var(--spacing-12) var(--spacing-16) calc(var(--spacing-32) + env(safe-area-inset-bottom, 0px));

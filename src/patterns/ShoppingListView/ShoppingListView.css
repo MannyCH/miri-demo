@@ -38,6 +38,16 @@
   z-index: 10;
 }
 
+@media (min-width: 768px) {
+  .shopping-list-view {
+    max-width: 100%;
+  }
+
+  .shopping-list-navbar-sheet {
+    max-width: 100%;
+  }
+}
+
 /* Header */
 .shopping-list-header {
   flex-shrink: 0;

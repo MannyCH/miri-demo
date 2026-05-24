@@ -11,6 +11,12 @@
   padding-top: var(--safe-area-inset-top);
 }
 
+@media (min-width: 768px) {
+  .meal-planning-view {
+    max-width: 100%;
+  }
+}
+
 /* Header area (title + calendar module) - Fixed at top, don't shrink */
 .meal-planning-fixed-header {
   flex-shrink: 0;

@@ -101,6 +101,24 @@ export const WithoutImage = {
 };
 
 /**
+ * Desktop layout — 30% ingredients / 70% directions side by side
+ */
+export const Desktop = {
+  parameters: {
+    viewport: { defaultViewport: 'tablet' },
+    docs: {
+      description: {
+        story: 'At 768px+ the view expands to full browser width with ingredients on the left (30%) and directions on the right (70%). Title, image, and nav bar span the full width.',
+      },
+    },
+  },
+  args: {
+    recipe: sampleRecipe,
+    onAddToList: () => console.log('Added to list'),
+  },
+};
+
+/**
  * Short recipe with fewer ingredients and steps
  */
 export const ShortRecipe = {
