@@ -24,6 +24,19 @@
 }
 
 /* ============================================
+   WRAPPER LAYOUT — mobile base for new divs
+   ============================================ */
+
+.recipe-detail-header,
+.recipe-detail-body,
+.recipe-detail-left,
+.recipe-detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* ============================================
    DESKTOP LAYOUT (768px+)
    ============================================ */
 
@@ -32,30 +45,55 @@
     max-width: 100%;
   }
 
-  /* Stack: hero block (image + title + servings) above the 2-col body */
+  /* Content no longer scrolls globally — columns handle their own scroll */
   .recipe-detail-content {
-    display: grid;
-    grid-template-columns: 30% 1fr;
-    grid-template-areas:
-      "title       title"
-      "image       image"
-      "servings    servings"
-      "ingredients directions"
-      "actions     actions";
-    column-gap: var(--spacing-48);
-    padding: var(--spacing-32) var(--spacing-48);
-    gap: var(--spacing-24);
+    overflow: hidden;
+    padding: var(--spacing-32) var(--spacing-48) 0;
+    gap: 0;
   }
 
-  .recipe-detail-title        { grid-area: title; }
-  .recipe-detail-image        { grid-area: image; }
-  .recipe-detail-section.recipe-ingredients-section { grid-area: ingredients; }
-  .recipe-detail-section:not(.recipe-ingredients-section):not(.recipe-servings-section) { grid-area: directions; }
-  .recipe-detail-section.recipe-servings-section { grid-area: servings; }
-  .recipe-detail-actions      { grid-area: actions; }
+  /* Title + image: fixed height, doesn't scroll */
+  .recipe-detail-header {
+    flex-shrink: 0;
+    gap: var(--spacing-24);
+    padding-bottom: var(--spacing-24);
+  }
 
   .recipe-detail-image img {
-    height: 360px;
+    height: 280px;
+  }
+
+  /* Two-col body fills the remaining height */
+  .recipe-detail-body {
+    flex: 1;
+    flex-direction: row;
+    gap: var(--spacing-48);
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  /* Left column: 30% width, scrolls independently */
+  .recipe-detail-left {
+    width: 30%;
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding-bottom: var(--spacing-32);
+  }
+
+  /* Right column: fills remaining width, scrolls independently */
+  .recipe-detail-right {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: var(--spacing-32);
+  }
+
+  /* Actions sit below directions, auto-width (not full-width) */
+  .recipe-detail-actions {
+    margin-top: var(--spacing-24);
+  }
+
+  .recipe-detail-actions .button {
+    flex: 0 0 auto;
   }
 }
 

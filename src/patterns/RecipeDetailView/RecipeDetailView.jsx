@@ -157,89 +157,91 @@ export const RecipeDetailView = ({
 
   return (
     <div className="recipe-detail-view" {...props}>
-      {/* Scrollable Content Area */}
       <div className="recipe-detail-content">
-        {/* Recipe Title */}
-        <h1 className="text-h1-bold recipe-detail-title">{recipe.title}</h1>
-
-        {/* Hero Image */}
-        <div className="recipe-detail-image">
-          {recipe.image
-            ? <img src={recipe.image} alt={recipe.title} />
-            : <RecipeDetailPlaceholder />}
+        {/* Fixed header: title + image (not scrollable on desktop) */}
+        <div className="recipe-detail-header">
+          <h1 className="text-h1-bold recipe-detail-title">{recipe.title}</h1>
+          <div className="recipe-detail-image">
+            {recipe.image
+              ? <img src={recipe.image} alt={recipe.title} />
+              : <RecipeDetailPlaceholder />}
+          </div>
         </div>
 
-        {/* Servings Section */}
-        <div className="recipe-detail-section recipe-servings-section">
-          <h2 className="text-tiny-bold recipe-detail-section-title">SERVINGS</h2>
-          <Stepper value={servings} min={1} max={99} onChange={setServings} />
-        </div>
+        {/* Two-column body: left = ingredients, right = directions + actions */}
+        <div className="recipe-detail-body">
+          {/* Left column: servings + ingredients */}
+          <div className="recipe-detail-left">
+            <div className="recipe-detail-section recipe-servings-section">
+              <h2 className="text-tiny-bold recipe-detail-section-title">SERVINGS</h2>
+              <Stepper value={servings} min={1} max={99} onChange={setServings} />
+            </div>
 
-        {/* Ingredients Section — non-interactive list */}
-        <div className="recipe-detail-section recipe-ingredients-section">
-          <h2 className="text-tiny-bold recipe-detail-section-title">
-            INGREDIENTS
-          </h2>
+            <div className="recipe-detail-section recipe-ingredients-section">
+              <h2 className="text-tiny-bold recipe-detail-section-title">
+                INGREDIENTS
+              </h2>
+              <ul className="recipe-ingredient-list">
+                {recipe.ingredients.map((ingredient, index) => {
+                  const { amount, name } = splitIngredient(ingredient);
+                  const scaledAmount = originalServings
+                    ? scaleQuantity(amount, servings / originalServings)
+                    : amount;
+                  return (
+                    <li key={index} className="recipe-ingredient-item text-body-regular">
+                      <span className="recipe-ingredient-amount">{scaledAmount}</span>
+                      <span className="recipe-ingredient-name">{name}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
 
-          <ul className="recipe-ingredient-list">
-            {recipe.ingredients.map((ingredient, index) => {
-              const { amount, name } = splitIngredient(ingredient);
-              const scaledAmount = originalServings
-                ? scaleQuantity(amount, servings / originalServings)
-                : amount;
-              return (
-                <li key={index} className="recipe-ingredient-item text-body-regular">
-                  <span className="recipe-ingredient-amount">{scaledAmount}</span>
-                  <span className="recipe-ingredient-name">{name}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+          {/* Right column: directions + actions pinned to bottom */}
+          <div className="recipe-detail-right">
+            <div className="recipe-detail-section">
+              <h2 className="text-tiny-bold recipe-detail-section-title">
+                DIRECTIONS
+              </h2>
+              <ol className="recipe-directions-list">
+                {recipe.directions.map((direction, index) => (
+                  <li key={index} className="recipe-direction-item">
+                    <Badge>{index + 1}</Badge>
+                    <p className="recipe-direction-text text-body-regular">
+                      {direction}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-        {/* Directions Section — Badge numbers + instruction text */}
-        <div className="recipe-detail-section">
-          <h2 className="text-tiny-bold recipe-detail-section-title">
-            DIRECTIONS
-          </h2>
-
-          <ol className="recipe-directions-list">
-            {recipe.directions.map((direction, index) => (
-              <li key={index} className="recipe-direction-item">
-                <Badge>{index + 1}</Badge>
-                <p className="recipe-direction-text text-body-regular">
-                  {direction}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        {/* Action buttons — Add to list + Cook */}
-        {(onAddToList || onCook) && (
-          <div className="recipe-detail-actions">
-            {onAddToList && (
-              <Button
-                variant="primary"
-                icon={isAdded ? <CheckIcon /> : <CartIcon />}
-                onClick={onAddToList}
-                disabled={isAdded}
-              >
-                {isAdded ? 'Added' : 'Add to list'}
-              </Button>
-            )}
-            {onCook && recipe.directions?.length > 0 && (
-              <Button
-                variant="secondary"
-                icon={<Coffee size={20} />}
-                showIcon
-                onClick={onCook}
-              >
-                Cook
-              </Button>
+            {(onAddToList || onCook) && (
+              <div className="recipe-detail-actions">
+                {onAddToList && (
+                  <Button
+                    variant="primary"
+                    icon={isAdded ? <CheckIcon /> : <CartIcon />}
+                    onClick={onAddToList}
+                    disabled={isAdded}
+                  >
+                    {isAdded ? 'Added' : 'Add to list'}
+                  </Button>
+                )}
+                {onCook && recipe.directions?.length > 0 && (
+                  <Button
+                    variant="secondary"
+                    icon={<Coffee size={20} />}
+                    showIcon
+                    onClick={onCook}
+                  >
+                    Cook
+                  </Button>
+                )}
+              </div>
             )}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Bottom Navigation */}
