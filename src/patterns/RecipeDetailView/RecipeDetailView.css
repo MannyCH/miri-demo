@@ -36,6 +36,11 @@
   gap: var(--spacing-16);
 }
 
+/* Image visibility: mobile shows --mobile, desktop shows --desktop */
+.recipe-detail-image--desktop {
+  display: none;
+}
+
 /* ============================================
    DESKTOP LAYOUT (768px+)
    ============================================ */
@@ -52,15 +57,18 @@
     gap: 0;
   }
 
-  /* Title + image: fixed height, doesn't scroll */
+  /* Title only: fixed, doesn't scroll */
   .recipe-detail-header {
     flex-shrink: 0;
-    gap: var(--spacing-24);
-    padding-bottom: var(--spacing-24);
+    padding-bottom: var(--spacing-8);
   }
 
+  /* Show desktop image, hide mobile image */
+  .recipe-detail-image--mobile { display: none; }
+  .recipe-detail-image--desktop { display: block; }
+
   .recipe-detail-image img {
-    height: 280px;
+    height: 260px;
   }
 
   /* Two-col body fills the remaining height */
