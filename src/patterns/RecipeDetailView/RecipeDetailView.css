@@ -190,27 +190,24 @@
     gap: var(--spacing-32);
   }
 
-  /* Header: title left (50%), image right (50%) */
+  /* Header: title then image, both centered */
   .recipe-detail-header {
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    gap: var(--spacing-32);
-  }
-
-  .recipe-detail-title {
-    flex: 1;
-    min-width: 0;
+    gap: var(--spacing-24);
+    text-align: center;
   }
 
   .recipe-detail-image {
-    flex: 1;
     width: auto;
+    max-width: 560px;
     flex-shrink: 1;
-    min-width: 0;
   }
 
   .recipe-detail-image img {
     height: 280px;
+    width: 560px;
+    max-width: 100%;
   }
 
   /* Body: ingredients left (sticky), directions right */
