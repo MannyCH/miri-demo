@@ -62,11 +62,12 @@
 
   .recipe-detail-title {
     flex: 1;
+    min-width: 0;
   }
 
   .recipe-detail-image {
-    width: 50%;
-    flex-shrink: 0;
+    flex: 1;
+    min-width: 0;
   }
 
   .recipe-detail-image img {
