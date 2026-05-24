@@ -195,7 +195,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-24);
-    max-width: 1000px;
+    max-width: calc(280px + var(--spacing-48) + 65ch);
     margin: 0 auto;
     width: 100%;
   }
@@ -209,12 +209,12 @@
     height: 360px;
   }
 
-  /* Body: both columns centered as a unit with equal side spacing */
+  /* Body: centered to match header width exactly */
   .recipe-detail-body {
     flex-direction: row;
     align-items: flex-start;
     gap: var(--spacing-48);
-    max-width: 1000px;
+    max-width: calc(280px + var(--spacing-48) + 65ch);
     margin: 0 auto;
     width: 100%;
   }
@@ -222,7 +222,7 @@
   .recipe-detail-left {
     position: sticky;
     top: 0;
-    width: 30%;
+    width: 280px;
     flex-shrink: 0;
     align-self: flex-start;
     max-height: calc(100dvh - 120px);
@@ -231,6 +231,7 @@
 
   .recipe-detail-right {
     flex: 1;
+    max-width: 65ch;
   }
 
   /* Actions: auto-width, sits below directions */
