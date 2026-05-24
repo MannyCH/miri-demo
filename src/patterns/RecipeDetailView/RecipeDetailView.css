@@ -53,9 +53,9 @@
     gap: var(--spacing-32);
   }
 
-  /* Header: image on left, title on right */
+  /* Header: title left (~50%), image right (~50%) */
   .recipe-detail-header {
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: center;
     gap: var(--spacing-32);
   }
@@ -65,31 +65,37 @@
   }
 
   .recipe-detail-image {
-    width: 40%;
+    width: 50%;
     flex-shrink: 0;
   }
 
   .recipe-detail-image img {
-    height: 260px;
+    height: 280px;
   }
 
-  /* Body: ingredients left, directions right */
+  /* Body: ingredients left (sticky), directions right (scrolls with page) */
   .recipe-detail-body {
     flex-direction: row;
     align-items: flex-start;
     gap: var(--spacing-48);
   }
 
+  /* Ingredients stick to the top once the body scrolls into view */
   .recipe-detail-left {
+    position: sticky;
+    top: 0;
     width: 30%;
     flex-shrink: 0;
+    align-self: flex-start;
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
   }
 
   .recipe-detail-right {
     flex: 1;
   }
 
-  /* Actions: auto-width, not full-width */
+  /* Actions: auto-width, sits below directions */
   .recipe-detail-actions {
     margin-top: var(--spacing-24);
   }

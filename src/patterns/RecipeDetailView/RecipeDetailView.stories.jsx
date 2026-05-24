@@ -77,6 +77,7 @@ export const Default = {
   args: {
     recipe: sampleRecipe,
     onAddToList: () => console.log('Added to list'),
+    onCook: () => console.log('Cook'),
   },
 };
 
@@ -108,13 +109,14 @@ export const Desktop = {
     viewport: { defaultViewport: 'tablet' },
     docs: {
       description: {
-        story: 'At 768px+ the view expands to full browser width with ingredients on the left (30%) and directions on the right (70%). Title, image, and nav bar span the full width.',
+        story: 'At 768px+: title left / image right at top, then ingredients (sticky left) and directions (scrollable right). Ingredients stay visible as you scroll through directions.',
       },
     },
   },
   args: {
     recipe: sampleRecipe,
     onAddToList: () => console.log('Added to list'),
+    onCook: () => console.log('Cook'),
   },
 };
 
