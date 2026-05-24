@@ -203,10 +203,12 @@
   .recipe-detail-image {
     width: 100%;
     flex-shrink: 0;
+    align-self: stretch;
   }
 
   .recipe-detail-image img {
     height: 360px;
+    object-position: center;
   }
 
   /* Body: centered to match header width exactly */
@@ -234,12 +236,15 @@
     max-width: 65ch;
   }
 
-  /* Actions: auto-width, sits below directions */
+  /* Actions: equal-width buttons, right-aligned */
   .recipe-detail-actions {
     margin-top: var(--spacing-24);
+    justify-content: flex-end;
+    max-width: 320px;
+    margin-left: auto;
   }
 
   .recipe-detail-actions .button {
-    flex: 0 0 auto;
+    flex: 1;
   }
 }
