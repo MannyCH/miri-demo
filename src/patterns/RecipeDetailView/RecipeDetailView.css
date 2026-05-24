@@ -36,76 +36,6 @@
   gap: var(--spacing-16);
 }
 
-
-/* ============================================
-   DESKTOP LAYOUT (768px+)
-   ============================================ */
-
-@media (min-width: 768px) {
-  .recipe-detail-view {
-    max-width: 100%;
-  }
-
-  /* Single scrollable content area */
-  .recipe-detail-content {
-    overflow-y: auto;
-    padding: var(--spacing-32) var(--spacing-48);
-    gap: var(--spacing-32);
-  }
-
-  /* Header: title left (~50%), image right (~50%) */
-  .recipe-detail-header {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-32);
-  }
-
-  .recipe-detail-title {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .recipe-detail-image {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .recipe-detail-image img {
-    height: 280px;
-  }
-
-  /* Body: ingredients left (sticky), directions right (scrolls with page) */
-  .recipe-detail-body {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: var(--spacing-48);
-  }
-
-  /* Ingredients stick to the top once the body scrolls into view */
-  .recipe-detail-left {
-    position: sticky;
-    top: 0;
-    width: 30%;
-    flex-shrink: 0;
-    align-self: flex-start;
-    max-height: calc(100dvh - 120px);
-    overflow-y: auto;
-  }
-
-  .recipe-detail-right {
-    flex: 1;
-  }
-
-  /* Actions: auto-width, sits below directions */
-  .recipe-detail-actions {
-    margin-top: var(--spacing-24);
-  }
-
-  .recipe-detail-actions .button {
-    flex: 0 0 auto;
-  }
-}
-
 /* Recipe Title */
 .recipe-detail-title {
   margin: 0;
@@ -241,4 +171,75 @@
   0%   { transform: scale(1); }
   40%  { transform: scale(0.96); }
   100% { transform: scale(1); }
+}
+
+/* ============================================
+   DESKTOP LAYOUT (768px+)
+   Must stay at end of file so these rules win the cascade over global styles above.
+   ============================================ */
+
+@media (min-width: 768px) {
+  .recipe-detail-view {
+    max-width: 100%;
+  }
+
+  /* Single scrollable content area */
+  .recipe-detail-content {
+    overflow-y: auto;
+    padding: var(--spacing-32) var(--spacing-48);
+    gap: var(--spacing-32);
+  }
+
+  /* Header: title left (50%), image right (50%) */
+  .recipe-detail-header {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-32);
+  }
+
+  .recipe-detail-title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .recipe-detail-image {
+    flex: 1;
+    width: auto;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .recipe-detail-image img {
+    height: 280px;
+  }
+
+  /* Body: ingredients left (sticky), directions right */
+  .recipe-detail-body {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-48);
+  }
+
+  .recipe-detail-left {
+    position: sticky;
+    top: 0;
+    width: 30%;
+    flex-shrink: 0;
+    align-self: flex-start;
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+  }
+
+  .recipe-detail-right {
+    flex: 1;
+  }
+
+  /* Actions: auto-width, sits below directions */
+  .recipe-detail-actions {
+    margin-top: var(--spacing-24);
+  }
+
+  .recipe-detail-actions .button {
+    flex: 0 0 auto;
+  }
 }
