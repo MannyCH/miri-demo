@@ -158,11 +158,10 @@ export const RecipeDetailView = ({
   return (
     <div className="recipe-detail-view" {...props}>
       <div className="recipe-detail-content">
-        {/* Fixed header: title + image for mobile */}
+        {/* Header: title + image — stacked on mobile, side by side on desktop */}
         <div className="recipe-detail-header">
           <h1 className="text-h1-bold recipe-detail-title">{recipe.title}</h1>
-          {/* Mobile only — hidden on desktop */}
-          <div className="recipe-detail-image recipe-detail-image--mobile">
+          <div className="recipe-detail-image">
             {recipe.image
               ? <img src={recipe.image} alt={recipe.title} />
               : <RecipeDetailPlaceholder />}
@@ -199,14 +198,8 @@ export const RecipeDetailView = ({
             </div>
           </div>
 
-          {/* Right column: image (desktop only) + directions + actions */}
+          {/* Right column: directions + actions */}
           <div className="recipe-detail-right">
-            {/* Desktop only — hidden on mobile */}
-            <div className="recipe-detail-image recipe-detail-image--desktop">
-              {recipe.image
-                ? <img src={recipe.image} alt={recipe.title} />
-                : <RecipeDetailPlaceholder />}
-            </div>
             <div className="recipe-detail-section">
               <h2 className="text-tiny-bold recipe-detail-section-title">
                 DIRECTIONS

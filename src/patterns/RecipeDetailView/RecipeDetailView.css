@@ -36,10 +36,6 @@
   gap: var(--spacing-16);
 }
 
-/* Image visibility: mobile shows --mobile, desktop shows --desktop */
-.recipe-detail-image--desktop {
-  display: none;
-}
 
 /* ============================================
    DESKTOP LAYOUT (768px+)
@@ -50,52 +46,50 @@
     max-width: 100%;
   }
 
-  /* Content no longer scrolls globally — columns handle their own scroll */
+  /* Single scrollable content area */
   .recipe-detail-content {
-    overflow: hidden;
-    padding: var(--spacing-32) var(--spacing-48) 0;
-    gap: 0;
+    overflow-y: auto;
+    padding: var(--spacing-32) var(--spacing-48);
+    gap: var(--spacing-32);
   }
 
-  /* Title only: fixed, doesn't scroll */
+  /* Header: image on left, title on right */
   .recipe-detail-header {
-    flex-shrink: 0;
-    padding-bottom: var(--spacing-8);
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: var(--spacing-32);
   }
 
-  /* Show desktop image, hide mobile image */
-  .recipe-detail-image--mobile { display: none; }
-  .recipe-detail-image--desktop { display: block; }
+  .recipe-detail-title {
+    flex: 1;
+  }
+
+  .recipe-detail-image {
+    width: 40%;
+    flex-shrink: 0;
+  }
 
   .recipe-detail-image img {
     height: 260px;
   }
 
-  /* Two-col body fills the remaining height */
+  /* Body: ingredients left, directions right */
   .recipe-detail-body {
-    flex: 1;
     flex-direction: row;
+    align-items: flex-start;
     gap: var(--spacing-48);
-    overflow: hidden;
-    min-height: 0;
   }
 
-  /* Left column: 30% width, scrolls independently */
   .recipe-detail-left {
     width: 30%;
     flex-shrink: 0;
-    overflow-y: auto;
-    padding-bottom: var(--spacing-32);
   }
 
-  /* Right column: fills remaining width, scrolls independently */
   .recipe-detail-right {
     flex: 1;
-    overflow-y: auto;
-    padding-bottom: var(--spacing-32);
   }
 
-  /* Actions sit below directions, auto-width (not full-width) */
+  /* Actions: auto-width, not full-width */
   .recipe-detail-actions {
     margin-top: var(--spacing-24);
   }
