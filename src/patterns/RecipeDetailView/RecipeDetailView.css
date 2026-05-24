@@ -210,11 +210,14 @@
     max-width: 100%;
   }
 
-  /* Body: ingredients left (sticky), directions right */
+  /* Body: both columns centered as a unit with equal side spacing */
   .recipe-detail-body {
     flex-direction: row;
     align-items: flex-start;
     gap: var(--spacing-48);
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .recipe-detail-left {
@@ -230,7 +233,6 @@
   .recipe-detail-right {
     flex: 1;
     max-width: 65ch;
-    margin: 0 auto;
   }
 
   /* Actions: auto-width, sits below directions */
