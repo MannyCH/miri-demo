@@ -190,11 +190,14 @@
     gap: var(--spacing-32);
   }
 
-  /* Header: title left-aligned, image full width below */
+  /* Header: same width as body, title left-aligned, image full width below */
   .recipe-detail-header {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-24);
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .recipe-detail-image {
