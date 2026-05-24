@@ -236,15 +236,16 @@
     max-width: 65ch;
   }
 
-  /* Actions: equal-width buttons, right-aligned */
+  /* Actions: equal-width buttons sized to the larger one, right-aligned */
   .recipe-detail-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: fit-content;
     margin-top: var(--spacing-24);
-    justify-content: flex-end;
-    max-width: 320px;
     margin-left: auto;
   }
 
   .recipe-detail-actions .button {
-    flex: 1;
+    flex: none;
   }
 }
