@@ -416,9 +416,11 @@ export function AccountPage() {
                   </fieldset>
                 </SettingsSection>
 
-                <SettingsSection title="Recipes" spacing="section">
-                  <BatchImportSection onRecipeImported={addUserRecipe} />
-                </SettingsSection>
+                {import.meta.env.VITE_DEMO_MODE !== 'true' && (
+                  <SettingsSection title="Recipes" spacing="section">
+                    <BatchImportSection onRecipeImported={addUserRecipe} />
+                  </SettingsSection>
+                )}
 
                 <SettingsSection title="Advanced - Health" spacing="section">
                   <UnitField

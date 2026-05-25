@@ -83,9 +83,9 @@ export function RecipesPage() {
 
   const handleSelectUrl = () => {
     setShowImportSheet(false);
+    if (import.meta.env.VITE_DEMO_MODE === 'true') return;
     setUrlValue('');
     setShowUrlInput(true);
-    // Focus the input after the sheet exit animation
     setTimeout(() => urlInputRef.current?.focus(), 150);
   };
 
@@ -122,6 +122,7 @@ export function RecipesPage() {
 
   const handleSelectPhoto = () => {
     setShowImportSheet(false);
+    if (import.meta.env.VITE_DEMO_MODE === 'true') return;
     photoInputRef.current?.click();
   };
 
@@ -158,6 +159,7 @@ export function RecipesPage() {
 
   const handleSelectFile = () => {
     setShowImportSheet(false);
+    if (import.meta.env.VITE_DEMO_MODE === 'true') return;
     fileInputRef.current?.click();
   };
 
