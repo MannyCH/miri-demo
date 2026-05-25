@@ -3,7 +3,6 @@ import { Plus } from 'react-feather';
 import { RecipeList } from '../../components/RecipeList';
 import { SearchBar } from '../../components/SearchBar';
 import { Button } from '../../components/Button/Button';
-import { Chip } from '../../components/Chip';
 import { SearchFab } from '../../components/SearchFab/SearchFab';
 import { NavigationBarConnected } from '../../components/NavigationBar/NavigationBarConnected';
 import './RecipesView.css';
@@ -62,24 +61,6 @@ export const RecipesView = ({
         )}
       </header>
 
-      {activeFilters.length > 0 && !isSearchOpen && (
-        <div className="recipes-active-filters" role="group" aria-label="Active filters">
-          {activeFilters.map(value => {
-            const filter = availableFilters.find(f => f.value === value);
-            return (
-              <Chip
-                key={value}
-                active
-                showClose
-                onClick={() => onFilterToggle?.(value)}
-                aria-label={`Remove filter: ${filter?.label ?? value}`}
-              >
-                {filter?.label ?? value}
-              </Chip>
-            );
-          })}
-        </div>
-      )}
 
       <div className="recipes-content">
         <RecipeList recipes={recipes} onRecipeClick={onRecipeClick} />
@@ -101,23 +82,6 @@ export const RecipesView = ({
               Cancel
             </Button>
           </div>
-          {availableFilters.length > 0 && (
-            <div className="recipes-filter-chips" role="group" aria-label="Filter recipes">
-              {availableFilters.map(filter => {
-                const isActive = activeFilters.includes(filter.value);
-                return (
-                  <Chip
-                    key={filter.value}
-                    active={isActive}
-                    showClose={isActive}
-                    onClick={() => onFilterToggle?.(filter.value)}
-                  >
-                    {filter.label}
-                  </Chip>
-                );
-              })}
-            </div>
-          )}
         </div>
       )}
 
