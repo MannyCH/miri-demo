@@ -20,7 +20,7 @@
   padding-bottom: var(--spacing-16);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-16);
+  gap: var(--spacing-32);
 }
 
 /* ============================================
@@ -58,7 +58,7 @@
 
 .recipe-detail-image img {
   width: 100%;
-  height: 240px;
+  height: 190px;
   display: block;
   object-fit: cover;
   object-position: center;
@@ -67,7 +67,7 @@
 .recipe-detail-placeholder-icon {
   display: block;
   width: 100%;
-  height: 240px;
+  height: 190px;
   color: var(--color-icon-weak);
   padding: var(--spacing-16);
   box-sizing: border-box;
@@ -77,7 +77,7 @@
 .recipe-detail-section {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
+  gap: var(--spacing-16);
 }
 
 /* Section titles (INGREDIENTS, DIRECTIONS) — Figma: Tiny/Bold with letter-spacing */
@@ -107,8 +107,8 @@
 
 .recipe-ingredient-item {
   display: grid;
-  grid-template-columns: 60px 1fr;
-  column-gap: var(--spacing-8);
+  grid-template-columns: 80px 1fr;
+  column-gap: var(--spacing-gap-md);
   align-items: start;
   color: var(--color-text-strong);
 }
@@ -140,10 +140,8 @@
   align-items: flex-start;
 }
 
-/* Keep badge aligned to top of text */
 .recipe-direction-item .badge {
   flex-shrink: 0;
-  margin-top: -2px;
 }
 
 .recipe-direction-text {
@@ -192,7 +190,7 @@
   .recipe-detail-content {
     overflow-y: auto;
     padding: var(--spacing-32) var(--spacing-48);
-    gap: var(--spacing-32);
+    gap: var(--spacing-48);
   }
 
   /* Header: same width as body, title left-aligned, image full width below */
@@ -212,7 +210,7 @@
   }
 
   .recipe-detail-image img {
-    height: 360px;
+    height: 310px;
     object-position: center;
   }
 
