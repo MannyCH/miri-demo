@@ -21,6 +21,15 @@
   .account-page {
     max-width: 100%;
   }
+
+  .account-page-content {
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--spacing-32) var(--spacing-48) var(--spacing-16);
+  }
 }
 
 /* ─── View container (clipping region for slide animation) ─── */

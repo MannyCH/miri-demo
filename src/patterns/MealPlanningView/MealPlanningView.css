@@ -11,34 +11,6 @@
   padding-top: var(--safe-area-inset-top);
 }
 
-@media (min-width: 768px) {
-  .meal-planning-view {
-    max-width: 100%;
-  }
-
-  .meal-planning-fixed-header,
-  .meal-planning-content {
-    max-width: calc(280px + var(--spacing-48) + 65ch);
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    box-sizing: border-box;
-    padding-left: var(--spacing-48);
-    padding-right: var(--spacing-48);
-  }
-
-  .meal-planning-section-header {
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: var(--spacing-32);
-  }
-
-  .meal-planning-calendar-section {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
 /* Header area (title + calendar module) - Fixed at top, don't shrink */
 .meal-planning-fixed-header {
   flex-shrink: 0;
@@ -121,4 +93,37 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@media (min-width: 768px) {
+  .meal-planning-view {
+    max-width: 100%;
+  }
+
+  .meal-planning-fixed-header,
+  .meal-planning-content {
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: var(--spacing-48);
+    padding-right: var(--spacing-48);
+  }
+
+  .meal-planning-section-header {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: var(--spacing-32);
+  }
+
+  .meal-planning-calendar-section {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .meal-planning-content {
+    padding-left: var(--spacing-48);
+    padding-right: var(--spacing-48);
+  }
 }
