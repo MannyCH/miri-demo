@@ -9,4 +9,28 @@
   padding-bottom: calc(var(--spacing-4) + var(--safe-area-inset-bottom));
   background: var(--color-background-raised);
   border-top: 1px solid var(--color-stroke-weak);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .navigation-bar {
+    border-top: none;
+    justify-content: center;
+  }
+
+  /* Border stays full-width while items are constrained */
+  .navigation-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-stroke-weak);
+  }
+
+  .navigation-bar > * {
+    flex: 1;
+    max-width: calc((280px + var(--spacing-48) + 65ch) / 4);
+  }
 }
