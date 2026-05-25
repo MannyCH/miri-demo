@@ -17,6 +17,22 @@
   .recipes-view {
     max-width: 100%;
   }
+
+  .recipes-header,
+  .recipes-content {
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: var(--spacing-48);
+    padding-right: var(--spacing-48);
+  }
+
+  .recipes-header {
+    padding-top: var(--spacing-32);
+    padding-bottom: var(--spacing-16);
+  }
 }
 
 /* Header */

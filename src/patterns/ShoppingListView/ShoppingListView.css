@@ -46,6 +46,21 @@
   .shopping-list-navbar-sheet {
     max-width: 100%;
   }
+
+  .shopping-list-header,
+  .shopping-list-content {
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: var(--spacing-48);
+    padding-right: var(--spacing-48);
+  }
+
+  .shopping-list-header {
+    padding-top: var(--spacing-32);
+  }
 }
 
 /* Header */
