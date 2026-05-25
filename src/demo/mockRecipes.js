@@ -6,8 +6,8 @@ export const MOCK_RECIPES = [
     categories: ['Soup', 'Vegetarian'],
     meal_type: 'lunch',
     servings: 2,
-    thumbnail: null,
-    image: null,
+    thumbnail: '/images/lentil-soup.png',
+    image: '/images/lentil-soup.png',
     ingredients: [
       '75g split yellow lentils, washed',
       '50g potato, quartered',
@@ -39,8 +39,8 @@ export const MOCK_RECIPES = [
     categories: ['Pasta', 'Italian'],
     meal_type: 'dinner',
     servings: 2,
-    thumbnail: null,
-    image: null,
+    thumbnail: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&w=800&q=80',
     ingredients: [
       '200g spaghetti',
       '100g pancetta or guanciale, diced',
@@ -68,8 +68,8 @@ export const MOCK_RECIPES = [
     categories: ['Fish', 'Healthy'],
     meal_type: 'dinner',
     servings: 2,
-    thumbnail: null,
-    image: null,
+    thumbnail: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&w=800&q=80',
     ingredients: [
       '2 salmon fillets (approx. 150g each)',
       '200g asparagus, woody ends trimmed',
@@ -95,8 +95,8 @@ export const MOCK_RECIPES = [
     categories: ['Starter', 'Italian', 'Vegetarian'],
     meal_type: 'breakfast',
     servings: 4,
-    thumbnail: null,
-    image: null,
+    thumbnail: 'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&w=800&q=80',
     ingredients: [
       '4 thick slices sourdough bread',
       '4 ripe tomatoes, diced',
