@@ -100,7 +100,8 @@
     max-width: 100%;
   }
 
-  .meal-planning-fixed-header,
+  .meal-planning-section-header,
+  .meal-planning-calendar-section,
   .meal-planning-content {
     max-width: calc(280px + var(--spacing-48) + 65ch);
     margin-left: auto;
@@ -112,18 +113,15 @@
   }
 
   .meal-planning-section-header {
-    padding-left: 0;
-    padding-right: 0;
     padding-top: var(--spacing-32);
+    padding-bottom: var(--spacing-16);
   }
 
   .meal-planning-calendar-section {
-    padding-left: 0;
-    padding-right: 0;
+    padding-top: 0;
   }
 
   .meal-planning-content {
-    padding-left: var(--spacing-48);
-    padding-right: var(--spacing-48);
+    padding-top: 0;
   }
 }
