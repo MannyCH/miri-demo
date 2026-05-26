@@ -21,11 +21,8 @@ export const MOCK_RECIPES = [
       '½ lemon, quartered',
     ],
     directions: [
-      'Wash 75g split yellow lentils under cold water until the water runs clear.',
-      'Cut 50g potato into quarters and cut ½ onion into quarters.',
       'In a large saucepan over medium heat, add 1 litre water, the yellow lentils, potato and onion with 1 teaspoon salt, bring to the boil, and cook for 10 minutes. Reduce the heat and cook for a further 25 minutes, until the soup thickens. Skim the surface using a slotted spoon.',
       'Remove from the heat and mash the contents of the pan. Add 1 litre boiling water, the cumin, turmeric and white pepper and whisk for 1 minute. Return to the heat and cook for a further 5 minutes.',
-      'Serve with ½ lemon — squeeze over each bowl.',
     ],
   },
   {
