@@ -717,6 +717,7 @@ export function AppProvider({ children }) {
     userRecipes,
     addUserRecipe,
     loadUserRecipes,
+    lookupRecipe,
 
     // Meal Plan
     mealPlan,

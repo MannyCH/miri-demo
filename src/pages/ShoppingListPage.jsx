@@ -21,6 +21,7 @@ export function ShoppingListPage() {
   const {
     shoppingList,
     mealPlan,
+    lookupRecipe,
     shoppingListViewMode,
     setShoppingListViewMode,
     toggleIngredientCheck,
@@ -80,17 +81,7 @@ export function ShoppingListPage() {
   }, []);
 
   // Count how many times each recipe appears in the meal plan this week
-  const mealPlanOccurrences = React.useMemo(() => {
-    const map = new Map();
-    mealPlan.forEach(day => {
-      Object.values(day.meals ?? {}).forEach(meal => {
-        if (meal?.id) map.set(meal.id, (map.get(meal.id) ?? 0) + 1);
-      });
-    });
-    return map;
-  }, [mealPlan]);
-
-  // Summary: unique recipes in the list × occurrences in plan × servings per meal
+  // Summary: unique recipes × how many times their ingredients appear in the list × servings
   const summaryEntries = React.useMemo(() => {
     const seen = new Map();
     shoppingList.forEach(item => {
@@ -99,10 +90,13 @@ export function ShoppingListPage() {
       }
     });
     return Array.from(seen.entries()).map(([recipeId, recipeName]) => {
-      const occurrences = mealPlanOccurrences.get(recipeId) ?? 1;
+      const recipe = lookupRecipe(recipeId);
+      const ingredientCount = recipe?.ingredients?.length ?? 0;
+      const itemsInList = shoppingList.filter(i => i.recipeId === recipeId).length;
+      const occurrences = ingredientCount > 0 ? Math.max(1, Math.round(itemsInList / ingredientCount)) : 1;
       return { recipeName, servings: occurrences * (preferences.servings ?? 2) };
     });
-  }, [shoppingList, mealPlanOccurrences, preferences.servings]);
+  }, [shoppingList, lookupRecipe, preferences.servings]);
 
   // Only fetch when switching TO smart view
   React.useEffect(() => {
