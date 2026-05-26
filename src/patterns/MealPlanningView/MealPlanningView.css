@@ -69,6 +69,8 @@
 .meal-planning-action {
   flex-shrink: 0;
   padding: var(--spacing-16);
+  display: flex;
+  justify-content: center;
 }
 
 

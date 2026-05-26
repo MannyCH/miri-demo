@@ -587,15 +587,14 @@ export function AppProvider({ children }) {
   // Toggle ingredient checked state (optimistic + API)
   const toggleIngredientCheck = useCallback((ingredientId) => {
     const item = shoppingList.find((i) => i.entryId === ingredientId);
-    if (!item || !activeListId) return;
+    if (!item || (!activeListId && !DEMO)) return;
     const newChecked = !item.checked;
-    // Optimistic update
     setShoppingList((prev) =>
       prev.map((i) => i.entryId === ingredientId ? { ...i, checked: newChecked } : i)
     );
+    if (DEMO) return;
     const sid = getSocketId();
     listApi.toggleItem(activeListId, ingredientId, newChecked, sid).catch(() => {
-      // Revert on failure
       setShoppingList((prev) =>
         prev.map((i) => i.entryId === ingredientId ? { ...i, checked: !newChecked } : i)
       );
@@ -604,17 +603,19 @@ export function AppProvider({ children }) {
 
   // Delete single ingredient (optimistic + API)
   const deleteIngredient = useCallback((ingredientId) => {
-    if (!activeListId) return;
+    if (!activeListId && !DEMO) return;
     setShoppingList((prev) => prev.filter((i) => i.entryId !== ingredientId));
+    if (DEMO) return;
     const sid = getSocketId();
     listApi.removeItem(activeListId, ingredientId, sid).catch(() => {});
   }, [activeListId, getSocketId]);
 
   // Delete all ingredients from a specific recipe
   const deleteRecipeFromShoppingList = useCallback((recipeId) => {
-    if (!activeListId) return;
-    const toDelete = shoppingList.filter((i) => i.recipeId === recipeId);
+    if (!activeListId && !DEMO) return;
     setShoppingList((prev) => prev.filter((i) => i.recipeId !== recipeId));
+    if (DEMO) return;
+    const toDelete = shoppingList.filter((i) => i.recipeId === recipeId);
     const sid = getSocketId();
     toDelete.forEach((i) => {
       listApi.removeItem(activeListId, i.entryId, sid).catch(() => {});
@@ -623,24 +624,25 @@ export function AppProvider({ children }) {
 
   // Mark all ingredients from a specific recipe as purchased
   const markRecipeAsPurchased = useCallback((recipeId) => {
-    if (!activeListId) return;
+    if (!activeListId && !DEMO) return;
     const items = shoppingList.filter((i) => i.recipeId === recipeId && !i.checked);
     setShoppingList((prev) =>
       prev.map((i) => i.recipeId === recipeId ? { ...i, checked: true } : i)
     );
+    if (DEMO) return;
     const sid = getSocketId();
     items.forEach((i) => {
       listApi.toggleItem(activeListId, i.entryId, true, sid).catch(() => {});
     });
   }, [shoppingList, activeListId, getSocketId]);
 
-  // Mark all ingredients from a specific recipe as not purchased
   const markRecipeAsUnpurchased = useCallback((recipeId) => {
-    if (!activeListId) return;
+    if (!activeListId && !DEMO) return;
     const items = shoppingList.filter((i) => i.recipeId === recipeId && i.checked);
     setShoppingList((prev) =>
       prev.map((i) => i.recipeId === recipeId ? { ...i, checked: false } : i)
     );
+    if (DEMO) return;
     const sid = getSocketId();
     items.forEach((i) => {
       listApi.toggleItem(activeListId, i.entryId, false, sid).catch(() => {});

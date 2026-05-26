@@ -119,13 +119,13 @@ export function generateDemoMealPlan() {
   today.setHours(0, 0, 0, 0);
 
   const schedule = [
-    { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-2' },
     { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-3' },
     { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-2' },
     { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-3' },
-    { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-2' },
     { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-3' },
     { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-2' },
+    { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-3' },
+    { breakfast: 'demo-4', lunch: 'demo-1', dinner: 'demo-3' },
   ];
 
   return schedule.map((slot, i) => {
