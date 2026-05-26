@@ -7,6 +7,9 @@ import { usePreferences } from '../context/PreferencesContext';
 import { fetchRecipeById } from '../lib/recipesApi';
 import { convertIngredients, scaleIngredients } from '../lib/unitConverter';
 import { Button } from '../components/Button/Button';
+import { getMockRecipeById } from '../demo/mockRecipes';
+
+const DEMO = import.meta.env.VITE_DEMO_MODE === 'true';
 
 function directionsToSteps(directions = []) {
   return directions.map((direction) => ({
@@ -35,6 +38,10 @@ export function RecipeDetailPage() {
 
   useEffect(() => {
     setIsLoading(true);
+    if (DEMO) {
+      const mock = getMockRecipeById(id);
+      if (mock) { setRecipe(mock); setIsLoading(false); return; }
+    }
     fetchRecipeById(id)
       .then(setRecipe)
       .catch(() => setRecipe(null))

@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useState, useEffect, useRef } from 'react';
 import { generateCalendarDays, formatDayTitle } from '../data/recipes';
 import { fetchUserRecipes } from '../lib/recipesApi';
-import { generateDemoMealPlan } from '../demo/mockRecipes';
+import { generateDemoMealPlan, MOCK_RECIPES } from '../demo/mockRecipes';
 
 const DEMO = import.meta.env.VITE_DEMO_MODE === 'true';
 import * as listApi from '../lib/shoppingListApi';
@@ -34,11 +34,17 @@ export function AppProvider({ children }) {
     loadUserRecipes();
   }, [isAuthenticated, loadUserRecipes]);
 
+  // Demo mode: load plan immediately on mount, don't wait for userRecipes
+  useEffect(() => {
+    if (!DEMO) return;
+    const stored = localStorage.getItem(MEAL_PLAN_KEY);
+    if (!stored) setMealPlanState(generateDemoMealPlan());
+  }, []);
+
   // Restore meal plan from localStorage once recipes are loaded
   useEffect(() => {
     if (!userRecipes.length) return;
     const stored = localStorage.getItem(MEAL_PLAN_KEY);
-    if (!stored && DEMO) { setMealPlanState(generateDemoMealPlan()); return; }
     if (!stored) return;
     try {
       const days = JSON.parse(stored);
@@ -73,7 +79,7 @@ export function AppProvider({ children }) {
   }, []);
 
   const lookupRecipe = useCallback(
-    (id) => userRecipes.find((r) => r.id === id) ?? null,
+    (id) => userRecipes.find((r) => r.id === id) ?? (DEMO ? (MOCK_RECIPES.find(r => r.id === id) ?? null) : null),
     [userRecipes]
   );
 
@@ -455,7 +461,7 @@ export function AppProvider({ children }) {
   
   // Add all ingredients from meal plan to shopping list
   const addAllToShoppingList = useCallback(async (replaceExisting = false) => {
-    if (!activeListId) return;
+    if (!activeListId && !DEMO) return;
     const allIngredients = [];
 
     mealPlan.forEach(day => {
@@ -477,15 +483,18 @@ export function AppProvider({ children }) {
     });
 
     if (replaceExisting) {
-      // Clear existing items first
-      const sid = getSocketId();
-      shoppingList.forEach((i) => {
-        listApi.removeItem(activeListId, i.entryId, sid).catch(() => {});
-      });
+      if (!DEMO) {
+        const sid = getSocketId();
+        shoppingList.forEach((i) => {
+          listApi.removeItem(activeListId, i.entryId, sid).catch(() => {});
+        });
+      }
       setShoppingList(allIngredients);
     } else {
       setShoppingList(prev => [...prev, ...allIngredients]);
     }
+
+    if (DEMO) return;
 
     // Send all items to API, then re-fetch canonical order
     const sid = getSocketId();
@@ -505,7 +514,7 @@ export function AppProvider({ children }) {
   // When mealPlan is provided, counts how many times the recipe appears
   // across the week and adds ingredients proportionally (one set per occurrence).
   const addRecipeToShoppingList = useCallback(async (recipeId, plan = []) => {
-    if (!activeListId) return;
+    if (!activeListId && !DEMO) return;
     const recipe = lookupRecipe(recipeId);
     if (!recipe) return;
 
@@ -529,8 +538,9 @@ export function AppProvider({ children }) {
       });
     }
 
-    // Optimistic update
     setShoppingList(prev => [...prev, ...newItems]);
+
+    if (DEMO) return;
 
     // Send to API, then re-fetch canonical order
     const sid = getSocketId();

@@ -61,16 +61,18 @@ export const MealPlanningView = ({
       <div className="meal-planning-content">
         {hasPlan && hasMealsForDay && (
           <>
-            {['breakfast', 'lunch', 'dinner'].map(mealType => (
-              <MealSection
-                key={mealType}
-                label={mealType.charAt(0).toUpperCase() + mealType.slice(1)}
-                meal={meals[mealType]}
-                onAddToList={() => onAddRecipeToList?.(meals[mealType]?.id)}
-                onRecipeClick={() => onRecipeClick?.(meals[mealType]?.id)}
-                isReplacing={replacingMealType === mealType}
-                onReplace={() => onReplaceMeal?.(mealType)}
-              />
+            {['breakfast', 'lunch', 'dinner'].map((mealType, idx) => (
+              <React.Fragment key={mealType}>
+                {idx > 0 && <Divider />}
+                <MealSection
+                  label={mealType.charAt(0).toUpperCase() + mealType.slice(1)}
+                  meal={meals[mealType]}
+                  onAddToList={() => onAddRecipeToList?.(meals[mealType]?.id)}
+                  onRecipeClick={() => onRecipeClick?.(meals[mealType]?.id)}
+                  isReplacing={replacingMealType === mealType}
+                  onReplace={() => onReplaceMeal?.(mealType)}
+                />
+              </React.Fragment>
             ))}
           </>
         )}

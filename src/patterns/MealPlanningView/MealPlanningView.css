@@ -71,9 +71,6 @@
   padding: var(--spacing-16);
 }
 
-.meal-planning-action .button {
-  width: 100%;
-}
 
 /* Empty state - centered text + button */
 .meal-planning-empty {
