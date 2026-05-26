@@ -1,6 +1,9 @@
 import React, { createContext, useCallback, useContext, useState, useEffect, useRef } from 'react';
 import { generateCalendarDays, formatDayTitle } from '../data/recipes';
 import { fetchUserRecipes } from '../lib/recipesApi';
+import { generateDemoMealPlan } from '../demo/mockRecipes';
+
+const DEMO = import.meta.env.VITE_DEMO_MODE === 'true';
 import * as listApi from '../lib/shoppingListApi';
 import { useAuth } from './AuthContext';
 import { usePusher } from './PusherContext';
@@ -35,6 +38,7 @@ export function AppProvider({ children }) {
   useEffect(() => {
     if (!userRecipes.length) return;
     const stored = localStorage.getItem(MEAL_PLAN_KEY);
+    if (!stored && DEMO) { setMealPlanState(generateDemoMealPlan()); return; }
     if (!stored) return;
     try {
       const days = JSON.parse(stored);
@@ -399,6 +403,7 @@ export function AppProvider({ children }) {
   
   // Generate meal plan — tries AI first, falls back to random
   const regenerateMealPlan = async (preferences = {}) => {
+    if (DEMO) return;
     setIsMealPlanGenerating(true);
     try {
       const recipeList = userRecipes.map(r => ({

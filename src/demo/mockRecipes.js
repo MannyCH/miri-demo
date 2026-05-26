@@ -112,3 +112,37 @@ export const MOCK_RECIPES = [
 export function getMockRecipeById(id) {
   return MOCK_RECIPES.find((r) => r.id === id) ?? null;
 }
+
+export function generateDemoMealPlan() {
+  const byId = Object.fromEntries(MOCK_RECIPES.map(r => [r.id, r]));
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const schedule = [
+    { breakfast: null,      lunch: 'demo-1', dinner: 'demo-2' },
+    { breakfast: 'demo-4',  lunch: null,     dinner: 'demo-3' },
+    { breakfast: null,      lunch: 'demo-1', dinner: 'demo-2' },
+    { breakfast: 'demo-4',  lunch: null,     dinner: 'demo-3' },
+    { breakfast: null,      lunch: 'demo-1', dinner: 'demo-2' },
+    { breakfast: 'demo-4',  lunch: 'demo-1', dinner: 'demo-3' },
+    { breakfast: null,      lunch: null,     dinner: 'demo-2' },
+  ];
+
+  return schedule.map((slot, i) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    return {
+      day: date.toLocaleDateString('en-US', { weekday: 'long' }),
+      date: date.getDate(),
+      weekday: date.toLocaleDateString('en-US', { weekday: 'short' }).slice(0, 2),
+      fullDate: date.toISOString().split('T')[0],
+      month: date.toLocaleDateString('en-US', { month: 'long' }),
+      isToday: i === 0,
+      meals: {
+        breakfast: slot.breakfast ? byId[slot.breakfast] : null,
+        lunch: slot.lunch ? byId[slot.lunch] : null,
+        dinner: slot.dinner ? byId[slot.dinner] : null,
+      },
+    };
+  });
+}
