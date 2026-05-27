@@ -1,0 +1,6 @@
+/* CalendarWeek - Matches Figma Calendar week component */
+.calendar-week {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

@@ -1,0 +1,68 @@
+.cooking-step-card {
+  background: var(--color-fill-brand-weak);
+  border-radius: var(--corner-radius-card);
+  padding: var(--spacing-inset-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.cooking-step-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-gap-xs);
+  padding-bottom: var(--spacing-12);
+}
+
+.cooking-step-card__icon,
+.cooking-step-card__verb {
+  color: var(--color-text-strong);
+}
+
+/* Simple layout: stacked name + note per item */
+
+.cooking-step-card__items--simple {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+.cooking-step-card__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.cooking-step-card__item-text,
+.cooking-step-card__item-note {
+  color: var(--color-text-weak);
+}
+
+/* Grid layout: qty column + name column per row */
+
+.cooking-step-card__items--grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-gap-sm);
+}
+
+.cooking-step-card__item-row {
+  display: flex;
+  align-items: center;
+}
+
+.cooking-step-card__item-qty {
+  width: 50px;
+  flex-shrink: 0;
+  color: var(--color-text-weak);
+}
+
+.cooking-step-card__item-name {
+  flex: 1;
+  color: var(--color-text-weak);
+}
+
+/* Duration */
+
+.cooking-step-card__duration {
+  color: var(--color-text-weak);
+  margin-top: var(--spacing-gap-sm);
+}

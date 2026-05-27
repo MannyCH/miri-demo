@@ -1,0 +1,11 @@
+/* RecipeList - Exact Figma Design */
+.recipe-list {
+  width: 100%;
+  background: var(--color-background-raised);
+}
+
+.recipe-list-empty {
+  padding: var(--spacing-32) var(--spacing-16);
+  text-align: center;
+  color: var(--color-text-weak);
+}

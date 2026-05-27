@@ -1,0 +1,56 @@
+/*
+ * AccountView — Token mapping from Figma (node 312:2844 Container):
+ *   Background/Base  → --color-background-base (page background)
+ *   Text/Strong      → --color-text-strong     (page title, settings header)
+ *   Container: padding 16px, gap 0 — each section manages its own spacing
+ *   Section header (312:2845): padding-bottom 16px after h1
+ *   Settings title (312:2857): padding-top 32px, padding-bottom 8px
+ */
+
+.account-view {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--color-background-base);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.account-view-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.account-view-header {
+  margin: 0;
+  padding-bottom: var(--spacing-16);
+}
+
+.account-view-settings-title {
+  margin: 0;
+  padding: var(--spacing-32) 0 var(--spacing-8);
+  color: var(--color-text-strong);
+}
+
+
+.account-view-navigation {
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .account-view-content {
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: var(--spacing-48);
+    padding-right: var(--spacing-48);
+    padding-top: var(--spacing-32);
+  }
+}

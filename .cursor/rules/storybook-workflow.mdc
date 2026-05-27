@@ -1,0 +1,283 @@
+---
+description: Two-phase workflow - Figma to Storybook, then Storybook to Web App
+alwaysApply: true
+---
+
+# Storybook Development Workflow
+
+## CRITICAL: Always Use Storybook MCP When Available
+
+**If Storybook is running (http://localhost:6006), ALWAYS use Storybook MCP to:**
+- Get exact story IDs and URLs
+- Retrieve component documentation
+- List available components
+- Get component props and metadata
+
+**How to check if Storybook is running:**
+- Check for running processes on port 6006
+- Look in terminals folder for `npm run storybook`
+- Try accessing http://localhost:6006/index.json
+
+**Never just read files when Storybook MCP is available!**
+
+## Complete Two-Phase Workflow
+
+### Phase 1: Figma → Storybook (Component Library Creation)
+
+**When:** Creating or documenting new components
+
+**Process:**
+1. **Get Figma Design** using Figma Console MCP:
+   ```
+   - Use: figma_execute, figma_capture_screenshot
+   - Extract: Typography, colors, spacing, structure
+   ```
+
+2. **Write Code with Base UI + Design Tokens:**
+   ```javascript
+   // Match Figma design using:
+   // - Base UI components (@base-ui/react)
+   // - Design tokens: var(--color-*), var(--spacing-*)
+   // - Typography classes: .text-h1-bold, .text-body-regular
+   ```
+
+3. **Document in Storybook:**
+   ```
+   - Create component stories (CSF3 format)
+   - Show all variants and states
+   - Document props and usage
+   - Verify visual match with Figma
+   ```
+
+4. **Verify:**
+   - Component matches Figma design exactly
+   - All design tokens used (no hardcoded values)
+   - Stories demonstrate all states
+   - Accessible and well-documented
+
+### Phase 2: Storybook → Web App (Application Development)
+
+**When:** Building the actual web application
+
+**Process:**
+1. **Check Storybook First** - Always use Storybook MCP before implementing:
+   ```
+   - Use: list-all-documentation, get-documentation
+   - Find: Existing components to reuse
+   - Understand: Component APIs and props
+   ```
+
+2. **Build from Documented Components:**
+   ```javascript
+   // Import components documented in Storybook
+   import { Button } from './components/Button';
+   import { RecipeListItem } from './components/RecipeListItem';
+   
+   // Use them in your app
+   // DO NOT create new versions or modify
+   ```
+
+3. **Compose Patterns:**
+   ```
+   - Patterns are compositions of Storybook components
+   - Document patterns in Storybook too
+   - Example: MealPlanningView uses CalendarWeek + RecipeListItem + NavigationBar
+   ```
+
+4. **Single Source of Truth:**
+   ```
+   Storybook = Component Library Reference
+   Web App = Uses Storybook Components
+   ```
+
+## Storybook MCP Usage (MANDATORY When Running)
+
+### Check if Storybook is Running
+
+**Before answering ANY question about components, ALWAYS check:**
+
+```bash
+# Method 1: Check terminals folder
+ls -la /path/to/terminals/ | grep storybook
+
+# Method 2: Check port 6006
+curl -s http://localhost:6006/index.json | head -5
+
+# Method 3: Look for running process
+ps aux | grep "npm run storybook"
+```
+
+**If Storybook is running (port 6006 active), you MUST use Storybook MCP!**
+
+### How to Use Storybook MCP
+
+**When Storybook is running, access it via HTTP endpoints:**
+
+```bash
+# Get all stories and components
+curl -s http://localhost:6006/index.json
+
+# This returns exact story IDs, URLs, component paths, and metadata
+# Parse this instead of reading files!
+```
+
+**What Storybook MCP provides:**
+- ✅ Exact story IDs (e.g., `components-searchbar--default`)
+- ✅ Direct URLs (e.g., `?path=/story/components-searchbar--default`)
+- ✅ Component paths and import paths
+- ✅ Available variants and exports
+- ✅ Story metadata and tags
+
+**Examples:**
+
+```bash
+# Get SearchBar story details
+# Returns: ID, URL, path, variants (default, without-icon, custom-placeholder)
+curl -s http://localhost:6006/index.json | grep -A5 "searchbar"
+
+# Get all components list
+curl -s http://localhost:6006/index.json | jq '.entries | keys'
+
+# Get specific component metadata
+curl -s http://localhost:6006/index.json | jq '.entries["components-searchbar--default"]'
+```
+
+### When User Asks About Components
+
+**User asks:** "Show me SearchBar" or "Get SearchBar props"
+
+**WRONG approach:**
+```
+❌ Just read SearchBar.jsx file
+❌ Manually construct story URL
+```
+
+**CORRECT approach:**
+```
+✅ 1. Check if Storybook is running
+✅ 2. If yes: curl http://localhost:6006/index.json
+✅ 3. Parse JSON for searchbar entries
+✅ 4. Return exact story IDs and URLs
+✅ 5. Show direct links to each variant
+```
+
+### Response Format
+
+When providing component info from Storybook MCP:
+
+```markdown
+## Component Name
+
+### Story IDs & URLs:
+- **Default**: `story-id` → http://localhost:6006/?path=/story/story-id
+- **Variant**: `story-id` → http://localhost:6006/?path=/story/story-id
+
+### Component Path:
+- Source: ./src/components/ComponentName/ComponentName.jsx
+- Stories: ./src/components/ComponentName/ComponentName.stories.jsx
+
+### Available Variants:
+- default
+- variant-one
+- variant-two
+```
+
+## When to Use Each MCP Server
+
+### Figma Console MCP (Phase 1 Only)
+
+Use for **creating** Storybook components:
+- `figma_execute` - Get component structure
+- `figma_capture_screenshot` - Visual reference
+- `figma_get_variables` - Design token bindings
+- `figma_get_styles` - Typography styles
+
+### Storybook HTTP API (Both Phases - When Running)
+
+Use whenever **Storybook is running**:
+- `GET /index.json` - All stories, IDs, URLs, metadata
+- `GET /metadata.json` - Storybook configuration
+- Parse JSON for exact component information
+
+## Required: Storybook Must Be Running
+
+The MCP server is only available when Storybook is running:
+
+```bash
+npm run storybook
+```
+
+The server runs at: `http://localhost:6006/mcp`
+
+## Story Development Standards
+
+When creating or modifying components:
+
+1. Use CSF3 (Component Story Format 3) for stories
+2. Create stories that demonstrate key component states
+3. Link stories in component documentation
+4. Ensure stories are accessible and well-documented
+5. Use the MCP server to get story URLs for verification
+
+## Common Mistakes to Avoid
+
+### ❌ DON'T: Read files when Storybook is running
+
+```bash
+# User asks: "Show me the Button component"
+
+# WRONG:
+Read src/components/Button/Button.jsx
+# Then manually describe props
+
+# CORRECT:
+1. Check if Storybook running → curl localhost:6006/index.json
+2. Parse Button entries → get all story IDs
+3. Return exact URLs for each variant
+```
+
+### ❌ DON'T: Manually construct story URLs
+
+```bash
+# WRONG: Guessing the URL format
+http://localhost:6006/?path=/story/button--primary
+
+# CORRECT: Get exact ID from index.json
+curl -s http://localhost:6006/index.json | grep "button"
+# Returns: "components-button--primary"
+# Use exact ID: http://localhost:6006/?path=/story/components-button--primary
+```
+
+### ❌ DON'T: Forget to check if Storybook is running
+
+```bash
+# ALWAYS check first:
+curl -s http://localhost:6006/index.json >/dev/null 2>&1 && echo "Running"
+
+# If running: Use HTTP API to get exact data
+# If not running: Read files directly
+```
+
+## Key Principles
+
+```
+Figma (Design) → Base UI Code + Tokens → Storybook (Docs) → Web App (Implementation)
+     ↑                                         ↑                    ↑
+Phase 1: Component Creation          Phase 2: App Development
+Uses: Figma MCP                      Uses: Storybook HTTP API (if running)
+```
+
+### Golden Rules
+
+1. ✅ **Always check if Storybook is running** before answering component questions
+2. ✅ **Use HTTP API when available** - Get exact story IDs and URLs from `/index.json`
+3. ✅ **Never guess story IDs or URLs** - Always get exact data from Storybook
+4. ✅ **Provide clickable links** - Users should be able to open stories directly
+5. ✅ **Never skip Storybook documentation** - It's the bridge between design and implementation
+
+### Quick Check Command
+
+```bash
+# Before ANY component question, run this:
+curl -s http://localhost:6006/index.json >/dev/null 2>&1 && echo "✅ Use Storybook HTTP API" || echo "❌ Read files directly"
+```

@@ -1,0 +1,121 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Skills
+
+- **design-agents** (`.claude/skills/design-agents/SKILL.md`) — run consumer-drift and propagation checks on the current PR. Trigger: `/design-agents`
+When the user types `/design-agents`, invoke the Skill tool with `skill: "design-agents"` before doing anything else.
+
+## Commands
+
+```bash
+npm run dev          # Start dev server (http://localhost:5173)
+npm run storybook    # Start Storybook (http://localhost:6006)
+npm run build        # Production build → dist/
+npm run chromatic    # Run visual regression + accessibility tests
+npm run preview      # Preview production build
+```
+
+No traditional unit test suite. Component testing happens via Storybook stories + Chromatic.
+
+## Architecture
+
+**Miri** is a React 19 + Vite SPA for meal planning. Hosted on Vercel with serverless API functions in `/api/`. Backend is Neon Postgres with Neon Auth.
+
+### Development Workflow
+
+Components can originate from multiple sources — Figma, Storybook, or direct code. The user will specify which. Key principles:
+
+- **From Figma:** When the user says to move a Figma design to code, check Figma MCP for specs.
+- **From Storybook:** When building app pages, check if a Storybook component already exists before creating a new one.
+- **Direct code:** Only when no existing component covers the use case.
+- **Always reuse:** If a component exists (Button, Divider, etc.), use it. Always use design tokens and typography classes — no exceptions.
+
+### Layer Structure
+
+| Layer | Location | Purpose |
+|-------|----------|---------|
+| Components | `src/components/` | Reusable UI primitives, each with `.stories.jsx` |
+| Patterns | `src/patterns/` | Full-screen layouts composed from components |
+| Pages | `src/pages/` | Wire patterns to React Router routes |
+| Context | `src/context/` | Global state (Auth, App, Preferences) |
+| API | `api/` | Vercel serverless functions |
+
+### Knowledge Graph
+
+`graphify-out/graph.json` + `graphify-out/GRAPH_REPORT.md` contain a structural knowledge graph of the codebase.
+
+- **Before working on any function, component, context, or API:** run `/graphify query "<name>"` to find related files and understand dependencies.
+- Keep the graph fresh after significant changes: `/graphify --update`
+
+### State Management
+
+Three React Contexts, nested in this order:
+1. `AuthContext` — Neon Auth session, user identity
+2. `AppContext` — Meal plans, shopping list, toast notifications
+3. `PreferencesContext` — User preferences persisted to Neon Postgres
+
+### Routing (all routes except `/auth` are protected)
+
+```
+/            → redirect to /planning or /auth
+/auth        → Login/Signup
+/planning    → Meal planning view
+/recipes     → Recipe browser
+/recipes/:id → Recipe detail
+/shopping-list
+/account
+```
+
+### Design Tokens
+
+All visual values come from CSS variables in `src/design-tokens.css`, `src/typography-tokens.css`, and `src/elevation-tokens.css`. Never hardcode colors, spacing, font sizes, or border radii. See `.claude/rules/tokens.md` for full reference.
+
+## Rules (read the relevant file before working in that area)
+
+| Working on | Read this |
+|------------|-----------|
+| Components or patterns | `.claude/rules/components.md` |
+| Design tokens, CSS, styling | `.claude/rules/tokens.md` |
+| Figma design work | `.claude/rules/figma.md` |
+| Storybook stories, Chromatic | `.claude/rules/storybook.md` |
+| API routes (`api/`) | `.claude/rules/api.md` |
+| Database, schema, migrations | `.claude/rules/database.md` |
+| Feature specs, docs | `.claude/rules/docs.md` |
+| Dev workflow, code quality, commits | `.claude/rules/development.md` |
+| Deployment, env vars, Vercel | `.claude/rules/deployment.md` |
+
+## Feature Specs (read before implementing)
+
+| Feature | Spec |
+|---------|------|
+| Shopping list sharing & multi-list | `docs/shopping-list-flow.json` |
+| Real-time sync (Pusher) | `docs/pusher-integration.json` |
+
+## Design Mappings
+
+| File | Purpose |
+|------|---------|
+| `FIGMA_STORYBOOK_MAPPING.md` | Figma ↔ Storybook component pairings |
+| `design-mapping.json` | Structured mapping data |
+| `database/schema.sql` | Full DB schema |
+
+## MCP Servers
+
+| Server | Scope | Availability |
+|--------|-------|-------------|
+| **Storybook** | project (`.mcp.json`) | `http://localhost:6006/mcp` — requires Storybook running |
+| **Figma Console** | user | Always connected |
+| **Neon** | user | Always connected |
+| **Context7** | user | Always connected — use proactively for library docs |
+
+## Key Rules
+
+1. **Minimal changes** — only what's requested, never add unrequested features
+2. **Design tokens** — never hardcode visual values
+3. **Reuse existing components** — check Storybook before creating new ones in app code
+4. **Neon MCP for DB** — always use branching for migrations
+5. **Conventional commits** — `type(scope): description`
+6. **Accessibility** — WCAG 2.1 AA, semantic HTML, keyboard navigation
+7. **Steve Jobs Design Buddy** — challenge complexity, favor simplicity

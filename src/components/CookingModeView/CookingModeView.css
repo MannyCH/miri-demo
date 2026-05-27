@@ -1,0 +1,57 @@
+.cooking-mode-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--color-background-base);
+}
+
+.cooking-mode-view__title {
+  flex-shrink: 0;
+  color: var(--color-text-strong);
+  padding: var(--spacing-inset-md) var(--spacing-inset-md) 0;
+  margin-bottom: var(--spacing-stack-md);
+}
+
+.cooking-mode-view__stack {
+  flex: 1;
+  overflow: hidden;
+  padding: 0 var(--spacing-inset-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.cooking-mode-view__step-stack {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.cooking-mode-view__step-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Non-interactive cards below the active one */
+.cooking-mode-view__step-group[aria-hidden='true'] {
+  pointer-events: none;
+}
+
+.cooking-mode-view__step-label {
+  color: var(--color-text-brand);
+  padding: var(--spacing-inset-md) 0;
+}
+
+.cooking-mode-view__nav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-gap-md) var(--spacing-inset-md);
+}
+
+.cooking-mode-view__nav-group {
+  display: flex;
+  gap: var(--spacing-gap-md);
+}

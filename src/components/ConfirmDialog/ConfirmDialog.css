@@ -1,0 +1,86 @@
+/**
+ * ConfirmDialog Component Styles
+ * Modal overlay with centered dialog
+ */
+
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: var(--spacing-16);
+}
+
+.confirm-dialog {
+  background: var(--color-background-raised);
+  border-radius: var(--corner-radius-16);
+  padding: var(--spacing-16);
+  max-width: 358px;
+  width: 100%;
+  box-shadow: var(--elevation-overlay);
+}
+
+.confirm-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-12);
+}
+
+.confirm-dialog-title {
+  margin: 0;
+  color: var(--color-text-strong);
+  flex: 1;
+}
+
+.confirm-dialog-close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: -4px -4px 0 var(--spacing-8);
+  border: none;
+  background: transparent;
+  border-radius: var(--corner-radius-8);
+  color: var(--color-icon-neutral);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.confirm-dialog-close:hover {
+  background: var(--color-fill-hover);
+}
+
+.confirm-dialog-message {
+  margin: 0 0 var(--spacing-24) 0;
+  color: var(--color-text-weak);
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.confirm-dialog-actions-row {
+  display: flex;
+  gap: var(--spacing-12);
+}
+
+/* Make buttons fill available width inside the dialog */
+.confirm-dialog-actions-row .button {
+  flex: 1;
+}
+
+.confirm-dialog-actions > .button {
+  width: 100%;
+}

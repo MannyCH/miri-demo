@@ -1,0 +1,157 @@
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AppProvider, useApp } from './context/AppContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { PusherProvider } from './context/PusherContext';
+import { PreferencesProvider, usePreferences } from './context/PreferencesContext';
+import { ToastContainer } from './components/ToastContainer';
+import { useVisualViewportInsets } from './hooks/useVisualViewportInsets';
+import './index.css';
+
+const MealPlanningPage = lazy(() => import('./pages/MealPlanningPage').then((module) => ({ default: module.MealPlanningPage })));
+const RecipesPage = lazy(() => import('./pages/RecipesPage').then((module) => ({ default: module.RecipesPage })));
+const RecipeDetailPage = lazy(() => import('./pages/RecipeDetailPage').then((module) => ({ default: module.RecipeDetailPage })));
+const ShoppingListPage = lazy(() => import('./pages/ShoppingListPage').then((module) => ({ default: module.ShoppingListPage })));
+const AuthPage = lazy(() => import('./pages/AuthPage').then((module) => ({ default: module.AuthPage })));
+const AccountPage = lazy(() => import('./pages/AccountPage').then((module) => ({ default: module.AccountPage })));
+const OnboardingPage = lazy(() => import('./pages/OnboardingPage').then((module) => ({ default: module.OnboardingPage })));
+const RecipeImportPage = lazy(() => import('./pages/RecipeImportPage').then((module) => ({ default: module.RecipeImportPage })));
+const JoinListPage = lazy(() => import('./pages/JoinListPage').then((module) => ({ default: module.JoinListPage })));
+
+/**
+ * Miri - Meal Planning App
+ * 
+ * Features:
+ * - Auto-generate 7-day meal plans
+ * - Browse recipes
+ * - View recipe details with ingredients and directions
+ * - Add ingredients to shopping list
+ * - Manage shopping list (list view or grouped by recipe)
+ * 
+ * Built with Storybook patterns as single source of truth
+ */
+function useNeedsOnboarding() {
+  const { user } = useAuth();
+  const { preferences, isReady } = usePreferences();
+  if (!user) return false;
+  // Wait until the preferences fetch completes. Without this, there is a
+  // render where isAuthenticated=true but the useEffect hasn't fired yet,
+  // so preferences are still defaults → needsOnboarding incorrectly = true.
+  if (!isReady) return null;
+  if (preferences.onboardedAt) return false;
+  // Backfill: existing users who completed onboarding before we tracked it
+  // in the DB may still have goal/eatingStyle set from that flow.
+  if (preferences.goal || preferences.eatingStyle) return false;
+  // Legacy localStorage fallback for users who only have the device marker.
+  const legacyDone = localStorage.getItem(`miri_onboarding_${user.id}`);
+  return !legacyDone;
+}
+
+const DEMO = import.meta.env.VITE_DEMO_MODE === 'true';
+
+function AppContent() {
+  useVisualViewportInsets();
+  const { toasts, dismissToast } = useApp();
+  const { isAuthenticated, isAuthReady, user } = useAuth();
+  const needsOnboarding = useNeedsOnboarding();
+  const location = useLocation();
+  // While AuthPage is mid-OTP, don't auto-redirect away from /auth — Neon Auth
+  // can mark emailVerified=true immediately on re-signup, which would otherwise
+  // skip the OTP step entirely.
+  const isInVerifyEmailFlow = new URLSearchParams(location.search).get('mode') === 'verify-email';
+
+  if (!DEMO && !isAuthReady) {
+    return <div>Loading authentication...</div>;
+  }
+
+  // While authenticated and preferences are still loading, hold off routing decisions
+  // to avoid sending new users to /planning instead of /onboarding.
+  if (!DEMO && isAuthenticated && needsOnboarding === null) {
+    return null;
+  }
+
+  // Don't redirect away from /auth until the user's email is verified.
+  // signUp() creates a session immediately (before OTP entry), so isAuthenticated
+  // becomes true while the user still needs to enter their verification code.
+  const isEmailVerified = Boolean(user?.emailVerified);
+  const canRedirectFromAuth = isAuthenticated && isEmailVerified;
+
+  const defaultRoute = DEMO
+    ? '/recipes'
+    : canRedirectFromAuth
+      ? (needsOnboarding ? '/onboarding' : '/planning')
+      : '/auth';
+
+  return (
+    <>
+      <Suspense fallback={<div>Loading page...</div>}>
+        <Routes>
+          <Route path="/" element={<Navigate to={defaultRoute} replace />} />
+          <Route
+            path="/auth"
+            element={canRedirectFromAuth && !isInVerifyEmailFlow && needsOnboarding !== null ? <Navigate to={needsOnboarding ? '/onboarding' : '/planning'} replace /> : <AuthPage />}
+          />
+          <Route
+            path="/onboarding"
+            element={isAuthenticated ? <OnboardingPage /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/auth/reset-password"
+            element={isAuthenticated ? <Navigate to="/planning" replace /> : <AuthPage />}
+          />
+          <Route
+            path="/auth/verify-email"
+            element={isAuthenticated ? <Navigate to="/planning" replace /> : <AuthPage />}
+          />
+          <Route
+            path="/planning"
+            element={isAuthenticated ? <MealPlanningPage /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/recipes"
+            element={isAuthenticated ? <RecipesPage /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/recipes/import"
+            element={isAuthenticated ? <RecipeImportPage /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/recipes/:id"
+            element={isAuthenticated ? <RecipeDetailPage /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/shopping-list"
+            element={isAuthenticated ? <ShoppingListPage /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/join/:token"
+            element={isAuthenticated ? <JoinListPage /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/account"
+            element={isAuthenticated ? <AccountPage /> : <Navigate to="/auth" replace />}
+          />
+        </Routes>
+      </Suspense>
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <PusherProvider>
+        <PreferencesProvider>
+          <AppProvider>
+            <BrowserRouter>
+              <AppContent />
+            </BrowserRouter>
+          </AppProvider>
+        </PreferencesProvider>
+      </PusherProvider>
+    </AuthProvider>
+  );
+}
+
+export default App;

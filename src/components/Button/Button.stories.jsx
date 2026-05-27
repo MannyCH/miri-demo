@@ -1,0 +1,433 @@
+import React from 'react';
+import { ArrowRight, Heart, MoreVertical, RotateCcw, Trash2 } from 'react-feather';
+import { Button } from './Button';
+
+export default {
+  title: 'Components/Button',
+  component: Button,
+  tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: `
+Button component with 4 variants and 5 interaction states, matching the Figma Design Library exactly.
+Built with Base UI for full accessibility (keyboard navigation, focus management, ARIA).
+
+## When to use
+- Main screen-level call to action → \`primary\`
+- Second option alongside a destructive or dominant primary (e.g. "Delete" + "Cancel") → \`secondary\`
+- Dismiss, cancel, or low-commitment inline action → \`tertiary\`
+- Low-emphasis destructive action (leave group, unlink, remove) → \`tertiary-delete\`
+- Inline cancel next to a search bar or input where underline would look out of place → \`ghost\`
+
+## When NOT to use
+- Don't use \`tertiary-delete\` for Cancel — use \`tertiary\` (cancel is not destructive)
+- Don't use multiple \`primary\` buttons in one view — there should be one dominant CTA per screen
+- Don't use \`primary\` for actions inside a list row or card — prefer \`secondary\` or \`tertiary\` there
+- Don't use a button when a plain link (anchor tag) is semantically correct (navigation to a new URL)
+
+## Pairs well with
+- \`ConfirmDialog\` — dialog action rows use \`secondary\` for confirm and \`tertiary-delete\` for cancel/destructive
+- \`AccountCard\`, \`BmrCalculatorCard\` — internal actions use \`secondary\`
+- Form footers — primary CTA + optional secondary "Back" or "Cancel"
+
+## Variants
+| Variant | Use case |
+|---|---|
+| \`primary\` | Main call-to-action |
+| \`secondary\` | Secondary action alongside a primary |
+| \`tertiary\` | Low-priority or inline action |
+| \`tertiary-delete\` | Destructive action (delete, remove) |
+
+## States
+| State | Trigger | Token applied |
+|---|---|---|
+| Default | — | Base fill/stroke |
+| Hover | \`:hover\` | See token table below |
+| Pressed | \`[data-active]\` / \`:active\` | See token table below |
+| Focus | \`:focus-visible\` / \`[data-focus-visible]\` | Variant-specific focus token mapping |
+| Disabled | \`[disabled]\` / \`:disabled\` | Weak token mapping (see table) |
+
+## Token mapping (from Figma)
+| Variant | Property | Default | Hover | Pressed | Focus | Disabled |
+|---|---|---|---|---|---|---|
+| Primary | background | \`Fill/Brand strong\` | \`Brand/Light/800\` (80%) | \`Fill/Brand strong\` + inner shadow | \`Fill/Brand strong\` | \`Stroke/Weak\` |
+| Primary | text/icon | \`Text/Inverted\` | — | — | — | \`Stroke/Weak\` |
+| Primary | border/outline | — | — | — | \`Stroke/Focus\` 2px | \`Stroke/Weak\` |
+| Secondary | background | transparent (no fill) | \`Fill/Hover\` (5%) | transparent (no fill) | transparent (no fill) | transparent (no fill) |
+| Secondary | border | \`Stroke/Brand strong\` | \`Stroke/Brand strong\` | \`Stroke/Brand strong\` | \`Stroke/Focus\` | \`Stroke/Weak\` |
+| Secondary | text/icon | \`Text/Brand\` | — | — | — | \`Stroke/Weak\` |
+| Secondary | outline | — | — | — | — | — |
+| Tertiary | background | transparent | \`Fill/Hover\` | \`Fill/Press\` | \`Fill/Hover\` | \`Stroke/Weak\` |
+| Tertiary | text/icon | \`Text/Brand\` | — | — | — | \`Stroke/Weak\` |
+| Tertiary | border/outline | — | — | — | \`Stroke/Focus\` 2px | \`Stroke/Weak\` |
+| Tertiary Delete | background | transparent | \`Fill/Hover\` | \`Fill/Press\` | \`Fill/Hover\` | \`Stroke/Error weak\` |
+| Tertiary Delete | text/icon | \`Text/Error\` | — | — | — | \`Stroke/Error weak\` |
+| Tertiary Delete | border/outline | — | — | — | \`Stroke/Error strong\` 2px | \`Stroke/Error weak\` |
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'tertiary', 'tertiary-delete', 'ghost'],
+      description: 'Visual variant matching Figma Property 1. `primary` — dominant CTA, filled brand colour. `secondary` — outlined, equal-weight alternative action. `tertiary` — low-emphasis inline action (underlined, no border). `tertiary-delete` — same weight as tertiary but signals irreversible/destructive intent via error colour. `ghost` — neutral-bordered cancel/dismiss button.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'primary' },
+      },
+    },
+    showIcon: {
+      control: 'boolean',
+      description: 'Show/hide icon slot',
+      table: { defaultValue: { summary: 'true' } },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disabled state — keeps 100% opacity and uses weak semantic tokens.',
+      table: { defaultValue: { summary: 'false' } },
+    },
+    children: {
+      control: 'text',
+      description: 'Button label text',
+    },
+  },
+};
+
+
+
+// ─── Single variant stories ───────────────────────────────────────────────────
+
+export const Primary = {
+  args: { variant: 'primary', children: 'Label', showIcon: true, icon: <Heart size={20} /> },
+};
+
+export const Secondary = {
+  args: { variant: 'secondary', children: 'Label', showIcon: true, icon: <Heart size={20} /> },
+};
+
+export const Tertiary = {
+  args: { variant: 'tertiary', children: 'Label', showIcon: false },
+};
+
+export const TertiaryDelete = {
+  args: { variant: 'tertiary-delete', children: 'Label', showIcon: false },
+};
+
+export const Ghost = {
+  args: { variant: 'ghost', children: 'Cancel', showIcon: false },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Like `tertiary` but without the underline decoration. Use for inline cancel/dismiss actions where an underline would look out of place — e.g. "Cancel" next to a search bar or URL input field.',
+      },
+    },
+  },
+};
+
+export const Disabled = {
+  args: { variant: 'primary', children: 'Label', showIcon: true, icon: <Heart size={20} />, disabled: true },
+  parameters: {
+    docs: {
+      description: {
+        story: 'All variants support `disabled`. Disabled styling now uses weak semantic tokens with full opacity (100%).',
+      },
+    },
+  },
+};
+
+// ─── All variants ─────────────────────────────────────────────────────────────
+
+export const AllVariants = {
+  name: 'All Variants',
+  parameters: {
+    docs: {
+      description: {
+        story: 'All 4 Figma variants side by side. Hover, click and tab through each to see interaction states.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-16)', alignItems: 'flex-start' }}>
+      <Button variant="primary" icon={<Heart size={20} />} showIcon>Label</Button>
+      <Button variant="secondary" icon={<Heart size={20} />} showIcon>Label</Button>
+      <Button variant="tertiary">Label</Button>
+      <Button variant="tertiary-delete">Label</Button>
+    </div>
+  ),
+};
+
+// ─── State showcase grid (mirrors Figma 4×5 grid) ────────────────────────────
+
+const StateRow = ({ variant, icon, showIcon }) => {
+  const pseudoStyle = (extra) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    borderRadius: 'var(--corner-radius-8)',
+    cursor: 'pointer',
+    transition: 'none',
+    ...extra,
+  });
+
+  const fills = {
+    primary: {
+      default: { background: 'var(--color-fill-brand-strong)', color: 'var(--color-text-inverted)', border: 'none' },
+      hover:   { background: 'var(--color-fill-hover), var(--color-fill-brand-strong)', color: 'var(--color-text-inverted)', border: 'none' },
+      pressed: { background: 'var(--color-fill-press), var(--color-fill-brand-strong)', color: 'var(--color-text-inverted)', border: 'none' },
+      focus:   { background: 'var(--color-fill-brand-strong)', color: 'var(--color-text-inverted)', border: 'none', outline: '2px solid var(--color-stroke-focus)', outlineOffset: '2px' },
+      disabled:{ background: 'var(--color-stroke-weak)', color: 'var(--color-stroke-weak)', border: '1px solid var(--color-stroke-weak)' },
+    },
+    secondary: {
+      default: { background: 'transparent', color: 'var(--color-text-brand)', border: '1px solid var(--color-stroke-brand-strong)' },
+      hover:   { background: 'var(--color-fill-hover)', color: 'var(--color-text-brand)', border: '1px solid var(--color-stroke-brand-strong)' },
+      pressed: { background: 'transparent', color: 'var(--color-text-brand)', border: '1px solid var(--color-stroke-brand-strong)' },
+      focus:   { background: 'transparent', color: 'var(--color-text-brand)', border: '1px solid var(--color-stroke-focus)' },
+      disabled:{ background: 'transparent', color: 'var(--color-stroke-weak)', border: '1px solid var(--color-stroke-weak)' },
+    },
+    tertiary: {
+      default: { background: 'transparent', color: 'var(--color-text-brand)', border: 'none', textDecoration: 'underline' },
+      hover:   { background: 'var(--color-fill-hover)', color: 'var(--color-text-brand)', border: 'none', textDecoration: 'underline' },
+      pressed: { background: 'var(--color-fill-press)', color: 'var(--color-text-brand)', border: 'none', textDecoration: 'underline' },
+      focus:   { background: 'var(--color-fill-hover)', color: 'var(--color-text-brand)', border: 'none', textDecoration: 'underline', outline: '2px solid var(--color-stroke-focus)', outlineOffset: '2px' },
+      disabled:{ background: 'var(--color-stroke-weak)', color: 'var(--color-stroke-weak)', border: '1px solid var(--color-stroke-weak)', textDecoration: 'none' },
+    },
+    'tertiary-delete': {
+      default: { background: 'transparent', color: 'var(--color-text-error)', border: 'none', textDecoration: 'underline' },
+      hover:   { background: 'var(--color-fill-hover)', color: 'var(--color-text-error)', border: 'none', textDecoration: 'underline' },
+      pressed: { background: 'var(--color-fill-press)', color: 'var(--color-text-error)', border: 'none', textDecoration: 'underline' },
+      focus:   { background: 'var(--color-fill-hover)', color: 'var(--color-text-error)', border: 'none', textDecoration: 'underline', outline: '2px solid var(--color-stroke-error-strong)', outlineOffset: '2px' },
+      disabled:{ background: 'var(--color-stroke-error-weak)', color: 'var(--color-stroke-error-weak)', border: '1px solid var(--color-stroke-error-weak)', textDecoration: 'none' },
+    },
+  };
+
+  const v = fills[variant];
+
+  return ['default', 'hover', 'pressed', 'focus', 'disabled'].map((state) => (
+    <div key={state} style={pseudoStyle(v[state])}>
+      {showIcon && <span style={{ display: 'flex' }}><Heart size={20} /></span>}
+      <span className="text-body-small-bold">Label</span>
+    </div>
+  ));
+};
+
+export const AllStates = {
+  name: 'All States (Figma reference)',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Static snapshot of all 20 states (4 variants × 5 states) exactly as designed in Figma.
+This mirrors the \`Property 1 × State\` grid in the Design Library.
+Interact with the live buttons above to see real CSS transitions.
+Includes Disabled state with weak token mapping and full opacity.
+        `,
+      },
+    },
+  },
+  render: () => {
+    const headerStyle = {
+      color: 'var(--color-text-weak)',
+      textAlign: 'center',
+      padding: '0 var(--spacing-8)',
+    };
+    const rowLabelStyle = {
+      color: 'var(--color-text-weak)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      paddingRight: 'var(--spacing-16)',
+      whiteSpace: 'nowrap',
+    };
+
+    const variants = [
+      { key: 'primary',        label: 'Primary',         showIcon: true },
+      { key: 'secondary',      label: 'Secondary',       showIcon: true },
+      { key: 'tertiary',       label: 'Tertiary',        showIcon: false },
+      { key: 'tertiary-delete',label: 'Tertiary Delete', showIcon: false },
+    ];
+
+    return (
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '120px repeat(5, 1fr)',
+        gap: 'var(--spacing-16)',
+        padding: 'var(--spacing-24)',
+        background: 'var(--color-background-base)',
+        borderRadius: 'var(--corner-radius-8)',
+        border: '1px solid var(--color-stroke-weak)',
+        alignItems: 'center',
+      }}>
+        {/* Header row */}
+        <div />
+        {['Default', 'Hover', 'Pressed', 'Focus', 'Disabled'].map(s => (
+          <div key={s} style={headerStyle} className="text-tiny-regular">{s}</div>
+        ))}
+
+        {/* Variant rows */}
+        {variants.map(({ key, label, showIcon }) => (
+          <React.Fragment key={key}>
+            <div style={rowLabelStyle} className="text-tiny-regular">{label}</div>
+            <StateRow variant={key} showIcon={showIcon} />
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  },
+};
+
+// ─── Icon-only variants ───────────────────────────────────────────────────────
+
+const labelStyle = { color: 'var(--color-text-weak)', textAlign: 'center' };
+
+export const IconButtonFramed = {
+  name: 'Icon Button — Framed (secondary)',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**\`variant="secondary"\` + \`iconOnly\`** — neutral-bordered icon button for actions like menus and view toggles.
+
+Default icon color is \`--color-icon-neutral\` (muted). Use \`aria-pressed\` to show selected state:
+pressed shows \`--color-icon-brand\` + \`--color-fill-brand-weak\` background.
+        `,
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-16)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
+        <Button variant="secondary" iconOnly icon={<MoreVertical size={20} />} aria-label="More options" />
+        <span className="text-body-small-regular" style={labelStyle}>Default</span>
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
+        <Button variant="secondary" iconOnly icon={<MoreVertical size={20} />} aria-pressed={true} aria-label="More options (active)" />
+        <span className="text-body-small-regular" style={labelStyle}>aria-pressed (toggle active)</span>
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
+        <Button variant="secondary" iconOnly icon={<MoreVertical size={20} />} aria-label="More options" disabled />
+        <span className="text-body-small-regular" style={labelStyle}>Disabled</span>
+      </div>
+    </div>
+  ),
+};
+
+export const IconButtonToggle = {
+  name: 'Icon Button — Toggle (aria-pressed)',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Toggle group using \`variant="secondary"\` + \`iconOnly\` + \`aria-pressed\`.
+
+Same component as the framed icon button — \`aria-pressed\` drives both the visual state and the screen-reader announcement ("toggle button, pressed / not pressed"). Only one option is active at a time.
+
+Used in ShoppingListView for the recipe-grouped / smart-grouped view switcher.
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [active, setActive] = React.useState('grid');
+    return (
+      <div style={{ display: 'flex', gap: 'var(--spacing-4)' }}>
+        <Button
+          variant="secondary"
+          iconOnly
+          icon={<Heart size={20} />}
+          aria-pressed={active === 'grid'}
+          aria-label="Grid view"
+          onClick={() => setActive('grid')}
+        />
+        <Button
+          variant="secondary"
+          iconOnly
+          icon={<MoreVertical size={20} />}
+          aria-pressed={active === 'list'}
+          aria-label="List view"
+          onClick={() => setActive('list')}
+        />
+      </div>
+    );
+  },
+};
+
+export const IconButtonRestore = {
+  name: 'Icon Button — Restore (tertiary)',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**\`variant="tertiary"\` + \`iconOnly\`** — borderless icon button for low-emphasis actions like restore or undo.
+
+Icon color is \`--color-icon-brand\`. No border.
+        `,
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-16)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
+        <Button variant="tertiary" iconOnly icon={<RotateCcw size={20} />} aria-label="Restore" />
+        <span className="text-body-small-regular" style={labelStyle}>Default</span>
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
+        <Button variant="tertiary" iconOnly icon={<RotateCcw size={20} />} aria-label="Restore" disabled />
+        <span className="text-body-small-regular" style={labelStyle}>Disabled</span>
+      </div>
+    </div>
+  ),
+};
+
+export const IconRight = {
+  name: 'Icon Right — Next (secondary)',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**\`iconPosition="right"\`** — places the icon after the label. Use for forward navigation actions like "Next →".
+
+Matches the Figma "Button Next" variant in the Design Library.
+        `,
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-16)', alignItems: 'flex-start' }}>
+      <Button variant="secondary" icon={<ArrowRight size={20} />} iconPosition="right" showIcon>Next</Button>
+      <Button variant="primary" icon={<ArrowRight size={20} />} iconPosition="right" showIcon>Next</Button>
+      <Button variant="secondary" icon={<ArrowRight size={20} />} iconPosition="right" showIcon disabled>Next</Button>
+    </div>
+  ),
+};
+
+export const IconButtonDelete = {
+  name: 'Icon Button — Delete (tertiary-delete)',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**\`variant="tertiary-delete"\` + \`iconOnly\`** — borderless destructive icon button for delete actions.
+
+Icon color is \`--color-icon-error\`. No border.
+        `,
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-16)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
+        <Button variant="tertiary-delete" iconOnly icon={<Trash2 size={20} />} aria-label="Delete" />
+        <span className="text-body-small-regular" style={labelStyle}>Default</span>
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--spacing-8)', alignItems: 'center' }}>
+        <Button variant="tertiary-delete" iconOnly icon={<Trash2 size={20} />} aria-label="Delete" disabled />
+        <span className="text-body-small-regular" style={labelStyle}>Disabled</span>
+      </div>
+    </div>
+  ),
+};

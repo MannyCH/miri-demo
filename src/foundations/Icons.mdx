@@ -1,0 +1,362 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Clock, Tag, Check, X, AlertTriangle, AlertCircle, XCircle, Home, BookOpen, MoreVertical } from 'react-feather';
+
+<Meta title="Foundations/Icons" />
+
+# Icons
+
+Miri uses **Feather Icons** - a collection of beautifully simple, open-source icons designed with a focus on simplicity, consistency, and flexibility.
+
+🔗 **Icon Library:** [Feather Icons](https://feathericons.com/)  
+📦 **License:** MIT (Free for commercial use)
+
+---
+
+## Why Feather Icons?
+
+✅ **Simple & Clean** - Minimalist 24x24 pixel icons  
+✅ **Consistent** - Uniform stroke width and style  
+✅ **Lightweight** - Small file sizes  
+✅ **Flexible** - Easily customizable with CSS  
+✅ **Open Source** - MIT license  
+
+---
+
+## Icon System
+
+### Icon Specifications
+
+- **Size:** 24x24px base size
+- **Stroke Width:** 2px
+- **Style:** Outlined, minimalist
+- **Color:** Inherits from parent or uses color tokens
+
+### Available Icons
+
+Feather Icons includes 280+ icons covering:
+- **UI Actions:** Check, X, Plus, Minus, Edit, Trash, Save
+- **Navigation:** Chevrons, Arrows, Menu, Home, Settings
+- **Communication:** Mail, Message, Phone, Bell
+- **Media:** Image, Video, Camera, Music, Film
+- **Files:** File, Folder, Download, Upload
+- **E-commerce:** Shopping Cart, Credit Card, Tag
+- **And more...**
+
+Browse the full collection at [feathericons.com](https://feathericons.com/)
+
+---
+
+## Installation & Usage
+
+```bash
+npm install react-feather
+```
+
+```jsx
+import { Calendar, Check, X, ChevronRight } from 'react-feather';
+
+function MyComponent() {
+  return (
+    <div>
+      <Calendar size={24} color="var(--color-icon-neutral)" />
+      <Check size={20} color="var(--color-icon-success)" />
+      <X size={20} color="var(--color-icon-error)" />
+      <ChevronRight size={16} color="var(--color-icon-brand)" />
+    </div>
+  );
+}
+```
+
+> **Never** write inline `<svg>` elements or custom icon components. Always import from `react-feather`.
+
+---
+
+## Using with Color Tokens
+
+Combine Feather Icons with Miri's semantic color tokens:
+
+<div style={{
+  marginTop: 'var(--spacing-24)',
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 'var(--spacing-24)'
+}}>
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <Clock size={24} color="var(--color-icon-neutral)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-strong)' }}>Neutral</span>
+  </div>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <Tag size={24} color="var(--color-icon-brand)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-strong)' }}>Brand</span>
+  </div>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <Check size={24} color="var(--color-icon-success)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-strong)' }}>Success</span>
+  </div>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <X size={24} color="var(--color-icon-error)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-strong)' }}>Error</span>
+  </div>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <AlertTriangle size={24} color="var(--color-icon-warning)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-strong)' }}>Warning</span>
+  </div>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <XCircle size={24} color="var(--color-icon-disabled)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-disabled)' }}>Disabled</span>
+  </div>
+</div>
+
+---
+
+## Common Use Cases
+
+### Navigation
+
+<div style={{
+  marginTop: 'var(--spacing-24)',
+  display: 'flex',
+  gap: 'var(--spacing-16)',
+  padding: 'var(--spacing-16)',
+  background: 'var(--color-background-sunken)',
+  borderRadius: 'var(--corner-radius-12)'
+}}>
+  <button style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12) var(--spacing-16)',
+    background: 'var(--color-background-raised)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)',
+    cursor: 'pointer'
+  }}>
+    <Home size={20} color="var(--color-icon-neutral)" />
+    <span className="text-body-small-bold" style={{ color: 'var(--color-text-strong)', lineHeight: '1' }}>Home</span>
+  </button>
+
+  <button style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12) var(--spacing-16)',
+    background: 'var(--color-background-raised)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)',
+    cursor: 'pointer'
+  }}>
+    <BookOpen size={20} color="var(--color-icon-neutral)" />
+    <span className="text-body-small-bold" style={{ color: 'var(--color-text-strong)', lineHeight: '1' }}>Recipes</span>
+  </button>
+
+  <button style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12) var(--spacing-16)',
+    background: 'var(--color-background-raised)',
+    border: '1px solid var(--color-stroke-weak)',
+    borderRadius: 'var(--corner-radius-8)',
+    cursor: 'pointer'
+  }}>
+    <Tag size={20} color="var(--color-icon-neutral)" />
+    <span className="text-body-small-bold" style={{ color: 'var(--color-text-strong)', lineHeight: '1' }}>Tags</span>
+  </button>
+</div>
+
+```jsx
+import { Home, BookOpen, Tag } from 'react-feather';
+
+<nav>
+  <button>
+    <Home size={20} color="var(--color-icon-neutral)" />
+    Home
+  </button>
+  <button>
+    <BookOpen size={20} color="var(--color-icon-neutral)" />
+    Recipes
+  </button>
+  <button>
+    <Tag size={20} color="var(--color-icon-neutral)" />
+    Tags
+  </button>
+</nav>
+```
+
+### Status Indicators
+
+<div style={{
+  marginTop: 'var(--spacing-24)',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 'var(--spacing-12)'
+}}>
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    background: 'var(--color-fill-success-weak)',
+    border: '1px solid var(--color-stroke-success-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <Check size={20} color="var(--color-icon-success)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-success)' }}>Recipe saved successfully</span>
+  </div>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    background: 'var(--color-fill-error-weak)',
+    border: '1px solid var(--color-stroke-error-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <AlertCircle size={20} color="var(--color-icon-error)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-error)' }}>Failed to load recipe</span>
+  </div>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-8)',
+    padding: 'var(--spacing-12)',
+    background: 'var(--color-fill-warning-weak)',
+    border: '1px solid var(--color-stroke-success-weak)',
+    borderRadius: 'var(--corner-radius-8)'
+  }}>
+    <AlertTriangle size={20} color="var(--color-icon-warning)" />
+    <span className="text-body-small-regular" style={{ color: 'var(--color-text-warning)' }}>Some ingredients may not be available</span>
+  </div>
+</div>
+
+---
+
+## Icon Sizes
+
+Feather Icons are designed at 24x24px but can be scaled:
+
+| Size | Use Case | Example |
+|------|----------|---------|
+| **16px** | Small buttons, dense lists | Tags, metadata |
+| **20px** | Standard buttons, navigation | Navigation items, actions |
+| **24px** | Default size, content icons | Recipe cards, headers |
+| **32px** | Large touch targets | Mobile navigation, CTAs |
+| **48px+** | Hero sections, empty states | Feature illustrations |
+
+```jsx
+import { Calendar } from 'react-feather';
+
+<Calendar size={16} />  {/* Small */}
+<Calendar size={20} />  {/* Standard */}
+<Calendar size={24} />  {/* Default */}
+<Calendar size={32} />  {/* Large */}
+```
+
+---
+
+## Best Practices
+
+✅ **DO:** Import from `react-feather` — always  
+✅ **DO:** Use semantic color tokens with icons  
+✅ **DO:** Maintain consistent icon sizes within a component  
+✅ **DO:** Add descriptive `aria-label` for icon-only buttons  
+
+❌ **DON'T:** Write inline `<svg>` elements  
+❌ **DON'T:** Create custom icon components  
+❌ **DON'T:** Mix icon styles (outlined vs filled)  
+❌ **DON'T:** Use icons smaller than 16px  
+❌ **DON'T:** Forget accessibility labels  
+
+---
+
+## Accessibility
+
+### Icon-Only Buttons
+
+Always provide text alternatives for icon-only buttons:
+
+```jsx
+import { Trash2 } from 'react-feather';
+
+// With aria-label
+<button aria-label="Delete recipe">
+  <Trash2 size={20} color="var(--color-icon-error)" />
+</button>
+```
+
+### Decorative Icons
+
+Mark purely decorative icons with `aria-hidden`:
+
+```jsx
+import { Calendar } from 'react-feather';
+
+<div>
+  <Calendar size={16} aria-hidden="true" />
+  <span>February 10, 2026</span>
+</div>
+```
+
+---
+
+## Resources
+
+- 🌐 **Official Website:** [feathericons.com](https://feathericons.com/)
+- 📦 **NPM Package:** [react-feather](https://www.npmjs.com/package/react-feather)
+- 📖 **GitHub:** [github.com/feathericons/feather](https://github.com/feathericons/feather)
+
+---
+
+**Related:**
+- [Colors](?path=/docs/foundations-colors--docs)
+- [Typography](?path=/docs/foundations-typography--docs)
+- [Elevation](?path=/docs/foundations-elevation--docs)

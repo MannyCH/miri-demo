@@ -1,0 +1,334 @@
+/* RecipeImportView Pattern - Editable recipe import form */
+
+.recipe-import-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--color-background-base);
+  max-width: 390px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding-top: var(--safe-area-inset-top);
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
+@media (min-width: 768px) {
+  .recipe-import-view {
+    max-width: 100%;
+  }
+}
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+
+.recipe-import-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12) var(--spacing-16);
+  border-bottom: 1px solid var(--color-stroke-weak);
+  background: var(--color-background-base);
+}
+
+.recipe-import-header-title {
+  color: var(--color-text-strong);
+}
+
+
+/* ── Scrollable content ──────────────────────────────────────────────── */
+
+.recipe-import-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* ── Image zone ──────────────────────────────────────────────────────── */
+
+.recipe-import-image-zone {
+  width: 100%;
+  flex-shrink: 0;
+  height: 160px;
+  border-radius: var(--corner-radius-4);
+  border: 2px dashed var(--color-stroke-weak);
+  background: var(--color-background-sunken);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.recipe-import-image-zone:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+.recipe-import-image-zone--drag-over {
+  border-color: var(--color-icon-brand);
+  background: var(--color-background-raised);
+}
+
+.recipe-import-image-zone--has-image {
+  height: 240px;
+  border: none;
+}
+
+.recipe-import-image-preview {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.recipe-import-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8);
+  color: var(--color-text-weak);
+  pointer-events: none;
+}
+
+.recipe-import-image-label {
+  color: var(--color-text-weak);
+}
+
+.recipe-import-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Title input ─────────────────────────────────────────────────────── */
+
+.recipe-import-title-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--color-text-strong);
+  padding: 0;
+  margin: 0;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+}
+
+.recipe-import-title-input::placeholder {
+  color: var(--color-text-weak);
+  opacity: 0.5;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────── */
+
+.recipe-import-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.recipe-import-section-title {
+  margin: 0;
+  color: var(--color-text-weak);
+  letter-spacing: 2px;
+}
+
+/* ── Lists ───────────────────────────────────────────────────────────── */
+
+.recipe-import-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.recipe-import-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.recipe-import-directions-list {
+  gap: var(--spacing-12);
+}
+
+.recipe-import-direction-item {
+  display: flex;
+  gap: var(--spacing-12);
+  align-items: flex-start;
+  padding: var(--spacing-4) 0;
+}
+
+.recipe-import-direction-item .badge {
+  flex-shrink: 0;
+  margin-top: var(--spacing-4);
+}
+
+
+/* ── Input / Textarea ────────────────────────────────────────────────── */
+
+.recipe-import-field {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid var(--color-stroke-weak);
+  background: transparent;
+  color: var(--color-text-strong);
+  font: inherit;
+  padding: var(--spacing-4) 0;
+  outline: none;
+  width: 100%;
+}
+
+.recipe-import-field:focus-visible {
+  border-bottom-color: var(--color-stroke-focus);
+  outline: none;
+}
+
+.recipe-import-field::placeholder {
+  color: var(--color-text-weak);
+  opacity: 0.5;
+}
+
+.recipe-import-textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+
+
+/* ── Ingredient rows ─────────────────────────────────────────────────── */
+
+.recipe-import-ingredient-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-4) 0;
+  border-bottom: 1px solid var(--color-stroke-weak);
+}
+
+.recipe-import-ingredient-row .recipe-import-field {
+  border-bottom: none;
+}
+
+.recipe-import-ingredient-quantity {
+  width: 72px;
+  flex: none;
+}
+
+.recipe-import-ingredient-name {
+  flex: 1;
+}
+
+/* ── Servings stepper ────────────────────────────────────────────────── */
+
+.recipe-import-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+}
+
+.recipe-import-stepper-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-stroke-weak);
+  background: transparent;
+  color: var(--color-text-strong);
+  cursor: pointer;
+  border-radius: var(--corner-radius-8);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.recipe-import-stepper-btn:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+.recipe-import-stepper-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.recipe-import-stepper-count {
+  min-width: 32px;
+  text-align: center;
+  color: var(--color-text-strong);
+}
+
+/* ── Categories chips field ──────────────────────────────────────────── */
+
+.recipe-import-categories-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-height: 44px;
+  border-bottom: 1px solid var(--color-stroke-weak);
+  padding: var(--spacing-8) 0;
+  cursor: text;
+}
+
+.recipe-import-category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-8);
+  background: var(--color-fill-brand-weak);
+  border: 1px solid var(--color-stroke-brand-weak);
+  border-radius: var(--corner-radius-32);
+  flex-shrink: 0;
+}
+
+.recipe-import-category-chip-label {
+  color: var(--color-text-brand);
+}
+
+.recipe-import-category-chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-brand);
+  cursor: pointer;
+  padding: 0;
+  border-radius: var(--corner-radius-4);
+  flex-shrink: 0;
+}
+
+.recipe-import-category-chip-remove:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+.recipe-import-categories-input {
+  flex: 1;
+  min-width: 120px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-strong);
+  font: inherit;
+  padding: 0;
+  outline: none;
+}
+
+.recipe-import-categories-input::placeholder {
+  color: var(--color-text-weak);
+  opacity: 0.5;
+}

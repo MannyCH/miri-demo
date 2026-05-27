@@ -1,0 +1,254 @@
+/* RecipeDetailView Pattern - Matches Figma "Recipes - Detailed" */
+.recipe-detail-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--color-background-base);
+  max-width: 390px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding-top: var(--safe-area-inset-top);
+}
+
+/* Scrollable content — takes remaining space between top and nav */
+.recipe-detail-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--spacing-16);
+  padding-bottom: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+/* ============================================
+   WRAPPER LAYOUT — mobile base for new divs
+   ============================================ */
+
+.recipe-detail-header,
+.recipe-detail-body,
+.recipe-detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.recipe-detail-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+/* Recipe Title */
+.recipe-detail-title {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+/* Hero Image — Figma: cornerRadius 4 */
+.recipe-detail-image {
+  width: 100%;
+  flex-shrink: 0;
+  border-radius: var(--corner-radius-4);
+  overflow: hidden;
+  background: var(--color-background-sunken);
+}
+
+.recipe-detail-image img {
+  width: 100%;
+  height: 190px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.recipe-detail-placeholder-icon {
+  display: block;
+  width: 100%;
+  height: 190px;
+  color: var(--color-icon-weak);
+  padding: var(--spacing-16);
+  box-sizing: border-box;
+}
+
+/* Section container */
+.recipe-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* Section titles (INGREDIENTS, DIRECTIONS) — Figma: Tiny/Bold with letter-spacing */
+.recipe-detail-section-title {
+  margin: 0;
+  color: var(--color-text-weak);
+  letter-spacing: 2px;
+}
+
+/* ============================================
+   INGREDIENTS — Figma: non-interactive rows
+   ============================================ */
+
+.recipe-ingredients-section {
+  padding-bottom: var(--spacing-16);
+}
+
+/* Figma: itemSpacing 8 between ingredient rows */
+.recipe-ingredient-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.recipe-ingredient-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  column-gap: var(--spacing-gap-md);
+  align-items: start;
+  color: var(--color-text-strong);
+}
+
+.recipe-ingredient-amount {
+  white-space: nowrap;
+}
+
+.recipe-ingredient-name {
+  min-width: 0;
+}
+
+/* ============================================
+   DIRECTIONS — Figma: Badge + instruction text
+   ============================================ */
+
+.recipe-directions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+.recipe-direction-item {
+  display: flex;
+  gap: var(--spacing-16);
+  align-items: flex-start;
+}
+
+.recipe-direction-item .badge {
+  flex-shrink: 0;
+}
+
+.recipe-direction-text {
+  flex: 1;
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+/* ============================================
+   ACTION BUTTONS — Add to list + Cook
+   ============================================ */
+
+.recipe-detail-actions {
+  display: flex;
+  gap: var(--spacing-gap-sm);
+}
+
+.recipe-detail-actions .button {
+  flex: 1;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+/* Added confirmation — same button design, content swaps with a pop */
+.recipe-detail-actions .button[disabled] {
+  opacity: 1;
+  animation: button-added-pop 0.25s ease;
+}
+
+@keyframes button-added-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================
+   DESKTOP LAYOUT (768px+)
+   Must stay at end of file so these rules win the cascade over global styles above.
+   ============================================ */
+
+@media (min-width: 768px) {
+  .recipe-detail-view {
+    max-width: 100%;
+  }
+
+  /* Single scrollable content area */
+  .recipe-detail-content {
+    overflow-y: auto;
+    padding: var(--spacing-32) var(--spacing-48);
+    gap: var(--spacing-48);
+  }
+
+  /* Header: same width as body, title left-aligned, image full width below */
+  .recipe-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-24);
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .recipe-detail-image {
+    width: 100%;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+
+  .recipe-detail-image img {
+    height: 310px;
+    object-position: center;
+  }
+
+  /* Body: centered to match header width exactly */
+  .recipe-detail-body {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-48);
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .recipe-detail-left {
+    position: sticky;
+    top: 0;
+    width: 280px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+  }
+
+  .recipe-detail-right {
+    flex: 1;
+    max-width: 65ch;
+  }
+
+  /* Actions: equal-width buttons sized to the larger one, right-aligned */
+  .recipe-detail-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: fit-content;
+    margin-top: var(--spacing-24);
+    margin-left: auto;
+  }
+
+  .recipe-detail-actions .button {
+    flex: none;
+  }
+}

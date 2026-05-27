@@ -1,0 +1,56 @@
+.join-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: var(--spacing-16);
+}
+
+.join-dialog-wrapper {
+  width: 100%;
+  max-width: 358px;
+}
+
+.join-dialog {
+  background: var(--color-background-raised);
+  border-radius: var(--corner-radius-16);
+  padding: var(--spacing-24);
+  box-shadow: var(--elevation-overlay);
+}
+
+.join-dialog-header {
+  margin-bottom: var(--spacing-12);
+}
+
+.join-dialog-title {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+.join-dialog-message {
+  margin: 0 0 var(--spacing-24) 0;
+  color: var(--color-text-weak);
+}
+
+.join-dialog-error {
+  color: var(--color-text-error);
+}
+
+.join-dialog-loading {
+  color: var(--color-text-weak);
+  margin: 0;
+  text-align: center;
+}
+
+.join-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.join-dialog-actions .button {
+  width: 100%;
+}

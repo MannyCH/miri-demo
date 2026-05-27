@@ -1,0 +1,33 @@
+{
+  "defaultMode": "acceptEdits",
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm install*)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(curl -s http://localhost:*)",
+      "Bash(tail *)",
+      "mcp__figma-console__figma_check_design_parity",
+      "mcp__figma-console__figma_list_open_files",
+      "mcp__figma-console__figma_get_file_data",
+      "mcp__figma-console__figma_take_screenshot",
+      "mcp__figma-console__figma_search_components",
+      "mcp__claude_ai_Vercel__get_project",
+      "mcp__claude_ai_Vercel__list_projects",
+      "mcp__github__get_me",
+      "mcp__github__create_pull_request",
+      "mcp__notion__API-post-page",
+      "mcp__notion__API-post-search",
+      "mcp__notion__API-query-data-source",
+      "mcp__notion__API-retrieve-a-page",
+      "mcp__notion__API-retrieve-block-children",
+      "mcp__notion__API-update-page-properties"
+    ]
+  }
+}

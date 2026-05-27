@@ -1,0 +1,585 @@
+/* ShoppingListView Pattern - Pure Flexbox Layout with Safe Areas */
+/* Container uses window.innerHeight (--inner-height) as the height base so the
+   measurement matches the keyboard-height calculation exactly — avoiding the
+   ~44px gap that 100svh causes on iOS Safari (browser chrome excluded from svh).
+   When the keyboard opens, --keyboard-height shrinks the container so the search
+   bar stays visible. The nav bar is a sibling sheet outside this container,
+   pinned to the layout-viewport bottom and covered by the keyboard. */
+.shopping-list-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Subtract navbar height normally; when keyboard opens it's taller than the
+     navbar so max() lets it take over — no gap, no double-subtraction. */
+  height: calc(var(--inner-height, 100svh) - max(var(--shopping-list-navbar-height, 64px), var(--keyboard-height, 0px)));
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background-base);
+  max-width: 390px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding-top: var(--safe-area-inset-top);
+}
+
+/* Nav bar sheet — sibling to .shopping-list-view, pinned to layout-viewport
+   bottom so the keyboard slides over it.
+   translateY(--vv-offset-top) counters iOS Safari shifting the layout viewport
+   upward on input focus — keeping the sheet at screen bottom. */
+.shopping-list-navbar-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 390px;
+  margin: 0 auto;
+  background: var(--color-background-base);
+  transform: translateY(var(--vv-offset-top, 0px));
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .shopping-list-view {
+    max-width: 100%;
+  }
+
+  .shopping-list-navbar-sheet {
+    max-width: 100%;
+  }
+
+  .shopping-list-header,
+  .shopping-list-content {
+    max-width: calc(280px + var(--spacing-48) + 65ch);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: var(--spacing-48);
+    padding-right: var(--spacing-48);
+  }
+
+  .shopping-list-header {
+    padding-top: var(--spacing-32);
+  }
+}
+
+/* Header */
+.shopping-list-header {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-24) var(--spacing-16) var(--spacing-16);
+  background: var(--color-background-base);
+}
+
+.shopping-list-header h1 {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+/* Subtitle row: list name + badge on left, view toggle + menu on right */
+.shopping-list-subtitle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-8);
+}
+
+.shopping-list-subtitle-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+.shopping-list-subtitle-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  flex-shrink: 0;
+}
+
+.shopping-list-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--color-stroke-weak);
+  border-radius: var(--corner-radius-8);
+  color: var(--color-icon-neutral);
+  cursor: pointer;
+}
+
+.shopping-list-menu-btn:hover {
+  background: var(--color-background-sunken);
+}
+
+.shopping-list-menu-btn:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+/* Summary card */
+.shopping-list-summary {
+  margin-bottom: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-16);
+  background: var(--color-background-sunken);
+  border-radius: var(--corner-radius-12);
+  border: 1px solid var(--color-stroke-weak);
+}
+
+.shopping-list-summary-title {
+  margin: 0 0 var(--spacing-8);
+  color: var(--color-text-strong);
+}
+
+.shopping-list-summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.shopping-list-summary-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-8);
+  color: var(--color-text-strong);
+}
+
+.shopping-list-summary-servings {
+  color: var(--color-text-weak);
+  flex-shrink: 0;
+  min-width: var(--spacing-32);
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.shopping-list-view-toggle {
+  display: flex;
+  gap: var(--spacing-4);
+}
+
+.view-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--color-stroke-weak);
+  border-radius: var(--corner-radius-8);
+  color: var(--color-icon-neutral);
+  cursor: pointer;
+}
+
+.view-toggle-button.active {
+  background: var(--color-fill-brand-weak);
+  border-color: var(--color-stroke-weak);
+  color: var(--color-icon-brand);
+}
+
+.view-toggle-button:hover {
+  background: var(--color-background-sunken);
+}
+
+.view-toggle-button:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+/* Scrollable content */
+.shopping-list-content {
+  flex: 1;
+  padding: var(--spacing-16);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  mask-image: linear-gradient(to bottom, black calc(100% - 56px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 56px), transparent 100%);
+}
+
+.shopping-list-clear {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-16) 0;
+}
+
+.shopping-list-purchased-title {
+  margin: var(--spacing-16) 0 var(--spacing-8);
+  color: var(--color-text-weak);
+}
+
+/* Recipe-grouped view */
+.shopping-list-recipe-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+.recipe-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.recipe-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.recipe-group-header h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+}
+
+.icon-button-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--corner-radius-4);
+  color: var(--color-icon-error);
+  cursor: pointer;
+}
+
+.icon-button-delete:hover {
+  background: var(--color-fill-error-weak);
+}
+
+.icon-button-delete:focus-visible {
+  outline: 2px solid var(--color-stroke-error-strong);
+  outline-offset: 2px;
+}
+
+.icon-button-restore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--corner-radius-4);
+  color: var(--color-icon-brand);
+  cursor: pointer;
+}
+
+.icon-button-restore:hover {
+  background: var(--color-fill-brand-weak);
+}
+
+.icon-button-restore:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+/* ── Smart grouped view ──────────────────────────────────────────────── */
+
+.shopping-list-smart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+.shopping-list-smart-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-32) 0;
+  color: var(--color-text-weak);
+}
+
+.shopping-list-smart-error,
+.shopping-list-smart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-32) 0;
+  color: var(--color-text-weak);
+  text-align: center;
+}
+
+.shopping-list-smart-retry {
+  border: none;
+  background: transparent;
+  color: var(--color-text-brand);
+  cursor: pointer;
+  padding: var(--spacing-4) 0;
+}
+
+.shopping-list-smart-retry:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+  border-radius: var(--corner-radius-4);
+}
+
+.shopping-list-smart-refresh {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--spacing-8);
+}
+
+.smart-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.smart-group-header {
+  margin: 0 0 var(--spacing-4);
+  color: var(--color-text-weak);
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.smart-group-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.smart-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-12) 0;
+  border: none;
+  border-bottom: 1px solid var(--color-stroke-weak);
+  background: transparent;
+  color: var(--color-text-strong);
+  text-align: left;
+  cursor: pointer;
+}
+
+.smart-item:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+  border-radius: var(--corner-radius-4);
+}
+
+.smart-item--checked {
+  color: var(--color-text-weak);
+  text-decoration: line-through;
+}
+
+.smart-item-quantity {
+  min-width: var(--spacing-48);
+  flex-shrink: 0;
+  color: var(--color-text-weak);
+}
+
+.smart-item--checked .smart-item-quantity {
+  color: var(--color-text-weak);
+}
+
+.smart-item-name {
+  flex: 1;
+}
+
+.smart-item svg:last-child {
+  flex-shrink: 0;
+  color: var(--color-icon-brand);
+}
+
+/* Search overlay — slides down from top, covers the header */
+.shopping-list-search-overlay {
+  position: absolute;
+  top: var(--safe-area-inset-top);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: var(--spacing-12) var(--spacing-16) var(--spacing-16);
+  background: var(--color-background-base);
+  border-bottom: 1px solid var(--color-stroke-weak);
+  animation: search-slide-down 0.2s ease;
+}
+
+.shopping-list-search-overlay::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: var(--spacing-32);
+  background: linear-gradient(to bottom, var(--color-background-base), transparent);
+  pointer-events: none;
+}
+
+/* Card: provides border, radius and clips children — same pattern as old bottom overlay */
+.shopping-list-search-card {
+  background: var(--color-background-sunken);
+  border: 1px solid var(--color-stroke-brand-weak);
+  border-radius: var(--corner-radius-card);
+  box-shadow: var(--elevation-raised);
+  overflow: hidden;
+}
+
+/* SearchBar inside card: card handles outer border/radius; keep bottom as divider */
+.shopping-list-search-card .search-bar-container {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+
+/* SuggestionList inside card: strip its own card styling */
+.shopping-list-search-card .suggestion-list {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+@keyframes search-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* FAB — positioned above the navbar sheet */
+.shopping-list-search-fab {
+  position: absolute;
+  bottom: calc(100% + var(--spacing-16));
+  right: var(--spacing-16);
+  z-index: 10;
+}
+
+
+/* Pantry staples section header */
+.smart-group-header--pantry {
+  color: var(--color-text-weak);
+  opacity: 0.7;
+}
+
+/* ── SmartListItem — mirrors IngredientListItem layout ───────────────────── */
+
+.smart-list-item {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Swipe wrapper — contains pantry action zone and content */
+.smart-list-item-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pantry zone — LEFT side, revealed by swiping RIGHT */
+.smart-list-item-pantry-zone {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fill-brand-strong);
+  color: var(--color-text-inverted);
+  border: none;
+  opacity: calc(var(--right-swipe-progress, 0));
+  transition: opacity 0.24s ease;
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.smart-list-item-wrapper.is-swiping .smart-list-item-pantry-zone {
+  pointer-events: auto;
+}
+
+/* Delete zone — RIGHT side, revealed by swiping LEFT */
+.smart-list-item-delete-zone {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fill-error-strong);
+  color: var(--color-text-inverted);
+  border: none;
+  opacity: calc(var(--left-swipe-progress, 0));
+  transition: opacity 0.24s ease;
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.smart-list-item-wrapper.is-swiping .smart-list-item-delete-zone {
+  pointer-events: auto;
+}
+
+/* Interactive container — supports tap and swipe */
+.smart-list-item-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16) 0;
+  background: var(--color-background-raised);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+}
+
+.smart-list-item-container:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+  border-radius: var(--corner-radius-4);
+}
+
+/* Quantity column — fixed-width so names align */
+.smart-list-item-quantity {
+  min-width: var(--spacing-48);
+  flex-shrink: 0;
+  color: var(--color-text-weak);
+}
+
+/* Name — fills remaining space */
+.smart-list-item-name {
+  flex: 1;
+  color: var(--color-text-strong);
+  transition: all 0.2s ease;
+}
+
+/* Checked/pantry state */
+.smart-list-item-container.is-checked .smart-list-item-name,
+.smart-list-item-container.is-checked .smart-list-item-quantity {
+  text-decoration: line-through;
+  color: var(--color-text-weak);
+}
+
+.smart-list-item-container.is-checked svg:last-child {
+  flex-shrink: 0;
+  color: var(--color-icon-brand);
+}

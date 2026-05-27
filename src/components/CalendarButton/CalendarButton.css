@@ -1,0 +1,57 @@
+/* CalendarButton - Matches Figma Calendar Button component set */
+.calendar-button {
+  width: 45px;
+  height: 45px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-0);
+  gap: var(--spacing-4);
+  border-radius: var(--corner-radius-8);
+  flex-shrink: 0;
+}
+
+
+/* No Background - Past/inactive days */
+.calendar-button-no-background {
+  background: transparent;
+  border-radius: var(--corner-radius-8);
+}
+
+.calendar-button-no-background .calendar-button-weekday,
+.calendar-button-no-background .calendar-button-day {
+  color: var(--color-text-disabled);
+}
+
+/* Default - Available days, no fill */
+.calendar-button-default {
+  background: transparent;
+}
+
+.calendar-button-default .calendar-button-weekday {
+  color: var(--color-grey-slate-light-500);
+}
+
+.calendar-button-default .calendar-button-day {
+  color: var(--color-text-weak);
+}
+
+/* Pressed - Selected/today with brand fill */
+.calendar-button-pressed {
+  background: var(--color-fill-selected);
+  padding: var(--spacing-4);
+}
+
+.calendar-button-pressed .calendar-button-weekday,
+.calendar-button-pressed .calendar-button-day {
+  color: var(--color-text-inverted);
+}
+
+.calendar-button:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
